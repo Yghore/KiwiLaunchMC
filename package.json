@@ -1,0 +1,18 @@
+{
+  "name": "kiwilaunch",
+  "version": "1.0.0",
+  "description": "Launch minecraft client",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Yghore",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^17.0.15",
+    "typescript": "^4.5.5"
+  },
+  "dependencies": {
+    "nodejs": "^0.0.0"
+  }
+}
