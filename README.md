@@ -1,9 +1,9 @@
 # KiwiLaunchMC
- Librairie pour le lancement du jeu Minecraft en NodeJS
+ Librairie for start the minecraft game in NodeJS
 
-## Utilisation :
+## Use :
 
-Exemple d'utilisation : 
+Exemple : 
 
 ```ts
 import path = require("path");
@@ -31,6 +31,6 @@ console.log(cmd.launch()); // Print the fully command (Not execute for the momen
 
 ```
 
-# Autre informations :
+# Other informations :
 
-Compa
+
