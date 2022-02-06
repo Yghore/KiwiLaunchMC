@@ -1,5 +1,5 @@
 {
-  "name": "kiwilaunch",
+  "name": "@kiwigdc/kiwilaunch",
   "version": "1.0.0",
   "description": "Launch minecraft client",
   "main": "index.js",
@@ -12,7 +12,19 @@
     "@types/node": "^17.0.15",
     "typescript": "^4.5.5"
   },
-  "dependencies": {
-    "nodejs": "^0.0.0"
-  }
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Yghore/KiwiLaunchMC.git"
+  },
+  "keywords": [
+    "Launch",
+    "Minecraft",
+    "Games",
+    "Nodejs"
+  ],
+  "bugs": {
+    "url": "https://github.com/Yghore/KiwiLaunchMC/issues"
+  },
+  "homepage": "https://github.com/Yghore/KiwiLaunchMC#readme",
+  "files": ["build/**/*"]
 }
