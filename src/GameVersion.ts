@@ -26,9 +26,9 @@ export class GameVersion {
         
     }
 
-    public getMainClass() : string
+    public getMainClass() : string[]
     {
-        return this.mainClass;
+        return [this.mainClass];
     }
 
 
@@ -37,30 +37,19 @@ export class GameVersion {
         return ["--tweakClass", this.tweaker];
     }
 
-    public getTweakerParameterLines() : string
-    {
-        return "--tweakClass ".concat(this.tweaker, " ");
-    }
 
     public getVersionParameter() : string[]
     {
         return ["--version", this.versionIndex];
     }
 
-    public getVersionParameterLines() : string
-    {
-        return "--version ".concat(this.versionIndex, " ");
-    }
+
 
     public getAssetIndexParameter() : string[]
     {
         return ["--assetIndex", this.versionIndex];
     }
 
-    public getAssetIndexParameterLines() : string
-    {
-        return "--assetIndex ".concat(this.versionIndex, " ");
-    }
 
 
 

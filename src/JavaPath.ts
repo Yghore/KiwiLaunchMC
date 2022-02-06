@@ -11,7 +11,7 @@ export class JavaPath {
         else
         {
 
-            this.javaPath = javaPath.concat('bin/java.exe ');
+            this.javaPath = javaPath.concat('bin/java.exe');
             
         }
             
@@ -23,8 +23,8 @@ export class JavaPath {
     /**
      * getJavaPath  
      */
-    public getJavaPath() {
-        return this.javaPath;
+    public getJavaPath() : string[] {
+        return [this.javaPath];
     }
 
 }

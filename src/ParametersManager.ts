@@ -76,21 +76,10 @@ export class ParametersManager
         ];
     }
 
-    public getOptionalParametersLines() : string {
-        var lines : string = "";
-        this.getOptionalParameters().forEach(opt => {
-            lines += opt + " ";
-        })
-        return lines;
-    }
+
 
     public getRamParameters() : string[] {
         return [this.minRamParam, this.maxRamParam];
-        
-    }
-
-    public getRamParametersLines() : string {
-        return this.minRamParam + " " + this.maxRamParam + " ";
         
     }
 

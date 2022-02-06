@@ -40,30 +40,28 @@ export class DirectoryManager {
     private getLibsList() : string {
         var dirLibs = this.getLibsDirectory();
         var libs : string = "";
-        fs.readdirSync(dirLibs).forEach(file => {
-            if(file.substring(file.lastIndexOf('.'), file.length) == ".jar")
-            {
-                libs += path.join(dirLibs ,file) + ";";
-            }
+        try {
+            fs.readdirSync(dirLibs).forEach(file => {
+                if(file.substring(file.lastIndexOf('.'), file.length) == ".jar")
+                {
+                    libs += path.join(dirLibs ,file) + ";";
+                }
+              });
+        } catch (error) {
+            throw new Error(`The directory : '${dirLibs}' doesn't exist !`);
             
-          });
+        }
+       
     
           libs += this.getmainJar() + " ";
         
         return libs;
     }
 
-    public getLibsParameterLines() : string 
-    {
-        
-        return "-cp " + this.getLibsList();
-    }
 
     public getLibsParameter() : string[]
     {
-        var arr : string[];
-        arr.push("-cp");
-        arr.concat(this.getLibsList());
+        var arr : string[] = ["-cp", this.getLibsList()];
         return arr;
     }
 
@@ -72,30 +70,18 @@ export class DirectoryManager {
         return ["-Djava.library.path=" + this.getNativesDirectory()];
     }
 
-    public getNativesParameterLines() : string
-    {
-        return "-Djava.library.path=" + this.getNativesDirectory() + " ";
-    }
 
     public getGameDirParameter() : string[]
     {
         return ["--gameDir", this.getGameDirDirectory()];
     }
 
-    public getGameDirParameterLines() : string
-    {
-        return "--gameDir".concat(" ", this.getGameDirDirectory(), " ");
-    }
 
     public getAssetsDirParameter() : string[]
     {
         return ["--assetsDir", this.getAssetDirDirectory()];
     }
 
-    public getAssetsDirParameterLines() : string
-    {
-        return "--assetsDir".concat(" ", this.getAssetDirDirectory(), " ");
-    }
 
 
 }
