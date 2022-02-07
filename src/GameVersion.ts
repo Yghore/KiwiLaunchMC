@@ -7,6 +7,13 @@ export class GameVersion {
     private tweaker : string | null;
     private mainClass : string = "net.minecraft.launchwrapper.Launch ";
     
+
+    /**
+     * 
+     * @param version The version of Minecraft (use Enum MinecraftVersion)
+     * @param tweak The GameTweak (System of minecraft, forge, vanilla, etc... use Enum GameTweak)
+     * @param versionIndex The version of games (1.12.2, 1.8.8, etc...)
+     */
     constructor(public version : MinecraftVersion, public tweak : GameTweak, public versionIndex : string) {
         if(tweak == GameTweak.FORGE)
         {
