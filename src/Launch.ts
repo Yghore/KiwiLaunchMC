@@ -3,15 +3,20 @@ import { DirectoryManager } from './DirectoryManager';
 import { JavaPath } from './JavaPath';
 import { GameVersion } from './GameVersion';
 import { ParametersManager } from './ParametersManager';
-import { MinecraftVersion } from './MinecraftVersion';
-import { GameTweak } from './GameTweak';
 import { AuthManager } from './AuthManager';
 import { ArrayToCommand } from './Utils/ArrayToCommand';
 
 
 export class Launch {
   
-
+    /**
+     * Main Class for create a Version of Minecraft
+     * @param javaPath 
+     * @param parametersManager 
+     * @param directoryManager 
+     * @param gameVersion 
+     * @param authManager 
+     */
     constructor(public javaPath: JavaPath, 
                 public parametersManager: ParametersManager, 
                 public directoryManager: DirectoryManager, 

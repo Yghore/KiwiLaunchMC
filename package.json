@@ -1,6 +1,6 @@
 {
   "name": "@kiwigdc/kiwilaunch",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Launch minecraft client",
   "main": "index.js",
   "scripts": {
@@ -26,5 +26,7 @@
     "url": "https://github.com/Yghore/KiwiLaunchMC/issues"
   },
   "homepage": "https://github.com/Yghore/KiwiLaunchMC#readme",
-  "files": ["build/**/*"]
+  "files": [
+    "build/**/*"
+  ]
 }
