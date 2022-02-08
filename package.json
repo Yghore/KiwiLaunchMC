@@ -1,6 +1,6 @@
 {
   "name": "@kiwigdc/kiwilaunch",
-  "version": "1.1.1-0",
+  "version": "1.2.0",
   "description": "Launch minecraft client",
   "main": "build/index.js",
   "types": "build/index.d.ts",
