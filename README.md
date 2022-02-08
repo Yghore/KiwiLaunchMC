@@ -1,6 +1,13 @@
 # KiwiLaunchMC
  Librairie for start the minecraft game in NodeJS
 
+## Construct folder (.LauncherTest for exemple)
+
+For construct the folder : 
+- Get the jar of the version in '.minecraft/versions/{VERSION}/{VERSION}.jar
+- Get all assets
+- Get libs for your version (libs in the .minecraft/versions/{VERSION}/{VERSION}.json)
+- Get natives in : 'https://packs.alwyn974.re/' (only natives, the libs not fix for log4j)
 ## Use :
 
 Exemple : 
