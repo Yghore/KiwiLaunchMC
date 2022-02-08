@@ -13,7 +13,7 @@ import { ProcessProfile } from "./ProcessProfile";
 
 
 var parameters = new ParametersManager(1024, 2048 , "M");
-var dir = new DirectoryManager("C:/Users/yhgor/AppData/Roaming/.minecraft", "natives", "libraries", "versions/1.12.2/1.12.2.jar", "assets");
+var dir = new DirectoryManager("C:/Users/yhgor/AppData/Roaming/.AllDeadReturnV2", "natives", "libs", "minecraft.jar", "assets");
 var java = new JavaPath("java"); // Use java or directory (bin/java is add into class)
 var ver = new GameVersion(MinecraftVersion.V1_8_HIGHER, GameTweak.VANILLA, "1.12.2");
 var auth = new AuthManager("Player2042", "sry", "nope");
