@@ -5,6 +5,12 @@ class AuthManager {
     username;
     accessToken;
     uuid;
+    /**
+     * Create User object with parameters
+     * @param username - The username of player
+     * @param accessToken - accessToken of player ("sry" for crack version)
+     * @param uuid - uuid of player ("nope" for crack version)
+     */
     constructor(username, accessToken, uuid) {
         this.username = username;
         this.accessToken = accessToken;

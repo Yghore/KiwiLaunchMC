@@ -5,8 +5,15 @@ export class GameVersion {
 
     
     private tweaker : string | null;
-    private mainClass : string = "net.minecraft.launchwrapper.Launch ";
+    private mainClass : string = "net.minecraft.client.main.Main";
     
+
+    
+    // 1.13.2 ou plus haut avec forge : 'cpw.mods.modlauncher.Launcher'
+
+    // 1.8 ou plus haut : 'net.minecraft.client.main.Main'
+    // 1.7.2 ou plus bas : 'net.minecraft.client.main.Main'
+    // 1.5.2 ou plus bas : 'net.minecraft.launchwrapper.Launch'
 
     /**
      * 
@@ -16,7 +23,11 @@ export class GameVersion {
      */
     constructor(public version : MinecraftVersion, public tweak : GameTweak, public versionIndex : string) {
         if(tweak == GameTweak.FORGE)
-        {
+        {   
+            if(version == MinecraftVersion.V1_13_2_HIGHER)
+            {
+                this.mainClass = 'cpw.mods.modlauncher.Launcher'
+            }
             if(version == MinecraftVersion.V1_7_10)
             {
                 this.tweaker = "cpw.mods.fml.common.launcher.FMLTweaker";
@@ -41,7 +52,12 @@ export class GameVersion {
 
     public getTweakerParameter() : string[]
     {
-        return ["--tweakClass", this.tweaker];
+        if(this.tweaker != undefined)
+        {
+            return ["--tweakClass", this.tweaker];
+        }
+        return [];
+        
     }
 
 

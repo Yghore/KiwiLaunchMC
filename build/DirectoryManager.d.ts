@@ -4,6 +4,14 @@ export declare class DirectoryManager {
     libs: string;
     mainJar: string;
     assetsDir: string;
+    /**
+     *
+     * @param gameDir The gamedirectory (The other param based of gameDir exemple for natives : gamedir + "/natives" ^^)
+     * @param natives natives of the games...
+     * @param libs libs,
+     * @param mainJar version.jar (or minecraft.jar)
+     * @param assetsDir assets
+     */
     constructor(gameDir: string, natives: string, libs: string, mainJar: string, assetsDir: string);
     getGameDirDirectory(): string;
     /**
@@ -13,7 +21,6 @@ export declare class DirectoryManager {
     getmainJar(): string;
     getAssetDirDirectory(): string;
     getLibsDirectory(): string;
-    private getLibsList;
     getLibsParameter(): string[];
     getNativesParameter(): string[];
     getGameDirParameter(): string[];

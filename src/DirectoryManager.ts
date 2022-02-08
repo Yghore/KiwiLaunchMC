@@ -1,5 +1,7 @@
 import path = require('path');
 import fs = require('fs');
+import { ArrayToCommand } from './Utils/ArrayToCommand';
+import { RecursiveFolderJar } from './Utils/RecursiveFolderJar';
 
 
 export class DirectoryManager {
@@ -45,31 +47,33 @@ export class DirectoryManager {
         return path.join(this.gameDir, this.libs);
     }
 
-    private getLibsList() : string {
-        var dirLibs = this.getLibsDirectory();
-        var libs : string = "";
-        try {
-            fs.readdirSync(dirLibs).forEach(file => {
-                if(file.substring(file.lastIndexOf('.'), file.length) == ".jar")
-                {
-                    libs += path.join(dirLibs ,file) + ";";
-                }
-              });
-        } catch (error) {
-            throw new Error(`The directory : '${dirLibs}' doesn't exist !`);
+    
+
+    // private getLibsList(libs : string = "") : string {
+    //     var dirLibs = this.getLibsDirectory();
+    //     try {
+    //         fs.readdirSync(dirLibs).forEach(file => {
+    //             if(file.substring(file.lastIndexOf('.'), file.length) == ".jar")
+    //             {
+    //                 libs += path.join(dirLibs ,file) + ";";
+    //             }
+    //           });
+    //     } catch (error) {
+    //         throw new Error(`The directory : '${dirLibs}' doesn't exist !`);
             
-        }
+    //     }
        
     
-          libs += this.getmainJar() + " ";
+    //       libs += this.getmainJar() + " ";
         
-        return libs;
-    }
+    //     return libs;
+    // }
+
 
 
     public getLibsParameter() : string[]
     {
-        var arr : string[] = ["-cp", this.getLibsList()];
+        var arr : string[] = ["-cp", ArrayToCommand.convert(RecursiveFolderJar.getAllFiles(this.getLibsDirectory()), ";").concat(this.getmainJar())];
         return arr;
     }
 

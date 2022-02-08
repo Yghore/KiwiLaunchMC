@@ -2,13 +2,22 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DirectoryManager = void 0;
 const path = require("path");
-const fs = require("fs");
+const ArrayToCommand_1 = require("./Utils/ArrayToCommand");
+const RecursiveFolderJar_1 = require("./Utils/RecursiveFolderJar");
 class DirectoryManager {
     gameDir;
     natives;
     libs;
     mainJar;
     assetsDir;
+    /**
+     *
+     * @param gameDir The gamedirectory (The other param based of gameDir exemple for natives : gamedir + "/natives" ^^)
+     * @param natives natives of the games...
+     * @param libs libs,
+     * @param mainJar version.jar (or minecraft.jar)
+     * @param assetsDir assets
+     */
     constructor(gameDir, natives, libs, mainJar, assetsDir) {
         this.gameDir = gameDir;
         this.natives = natives;
@@ -35,24 +44,23 @@ class DirectoryManager {
     getLibsDirectory() {
         return path.join(this.gameDir, this.libs);
     }
-    getLibsList() {
-        var dirLibs = this.getLibsDirectory();
-        var libs = "";
-        try {
-            fs.readdirSync(dirLibs).forEach(file => {
-                if (file.substring(file.lastIndexOf('.'), file.length) == ".jar") {
-                    libs += path.join(dirLibs, file) + ";";
-                }
-            });
-        }
-        catch (error) {
-            throw new Error(`The directory : '${dirLibs}' doesn't exist !`);
-        }
-        libs += this.getmainJar() + " ";
-        return libs;
-    }
+    // private getLibsList(libs : string = "") : string {
+    //     var dirLibs = this.getLibsDirectory();
+    //     try {
+    //         fs.readdirSync(dirLibs).forEach(file => {
+    //             if(file.substring(file.lastIndexOf('.'), file.length) == ".jar")
+    //             {
+    //                 libs += path.join(dirLibs ,file) + ";";
+    //             }
+    //           });
+    //     } catch (error) {
+    //         throw new Error(`The directory : '${dirLibs}' doesn't exist !`);
+    //     }
+    //       libs += this.getmainJar() + " ";
+    //     return libs;
+    // }
     getLibsParameter() {
-        var arr = ["-cp", this.getLibsList()];
+        var arr = ["-cp", ArrayToCommand_1.ArrayToCommand.convert(RecursiveFolderJar_1.RecursiveFolderJar.getAllFiles(this.getLibsDirectory()), ";").concat(this.getmainJar())];
         return arr;
     }
     getNativesParameter() {

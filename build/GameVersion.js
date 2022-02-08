@@ -8,12 +8,25 @@ class GameVersion {
     tweak;
     versionIndex;
     tweaker;
-    mainClass = "net.minecraft.launchwrapper.Launch ";
+    mainClass = "net.minecraft.client.main.Main";
+    // 1.13.2 ou plus haut avec forge : 'cpw.mods.modlauncher.Launcher'
+    // 1.8 ou plus haut : 'net.minecraft.client.main.Main'
+    // 1.7.2 ou plus bas : 'net.minecraft.client.main.Main'
+    // 1.5.2 ou plus bas : 'net.minecraft.launchwrapper.Launch'
+    /**
+     *
+     * @param version The version of Minecraft (use Enum MinecraftVersion)
+     * @param tweak The GameTweak (System of minecraft, forge, vanilla, etc... use Enum GameTweak)
+     * @param versionIndex The version of games (1.12.2, 1.8.8, etc...)
+     */
     constructor(version, tweak, versionIndex) {
         this.version = version;
         this.tweak = tweak;
         this.versionIndex = versionIndex;
         if (tweak == GameTweak_1.GameTweak.FORGE) {
+            if (version == MinecraftVersion_1.MinecraftVersion.V1_13_2_HIGHER) {
+                this.mainClass = 'cpw.mods.modlauncher.Launcher';
+            }
             if (version == MinecraftVersion_1.MinecraftVersion.V1_7_10) {
                 this.tweaker = "cpw.mods.fml.common.launcher.FMLTweaker";
             }
@@ -29,7 +42,10 @@ class GameVersion {
         return [this.mainClass];
     }
     getTweakerParameter() {
-        return ["--tweakClass", this.tweaker];
+        if (this.tweaker != undefined) {
+            return ["--tweakClass", this.tweaker];
+        }
+        return [];
     }
     getVersionParameter() {
         return ["--version", this.versionIndex];

@@ -9,9 +9,19 @@ export declare class Launch {
     directoryManager: DirectoryManager;
     gameVersion: GameVersion;
     authManager: AuthManager;
+    /**
+     * Main Class for create a Version of Minecraft
+     * @param javaPath
+     * @param parametersManager
+     * @param directoryManager
+     * @param gameVersion
+     * @param authManager
+     */
     constructor(javaPath: JavaPath, parametersManager: ParametersManager, directoryManager: DirectoryManager, gameVersion: GameVersion, authManager: AuthManager);
     /**
-     * setRam
+     *
+     * @returns The cmd for the launched (internal)
      */
-    launch(): string;
+    getLaunchExternalProfile(): string;
+    getLaunchInternalProfile(): string[];
 }

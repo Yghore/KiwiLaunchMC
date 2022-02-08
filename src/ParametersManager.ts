@@ -30,7 +30,7 @@ export class ParametersManager
             {
                 if(Math.log2(this.minRam) % 1 === 0)
                 {
-                    this.minRamParam =  "-Xms" + this.minRam + "M";
+                    this.minRamParam = "-Xms" + this.minRam + "M";
                 }
                 else
                 {
@@ -42,7 +42,7 @@ export class ParametersManager
             {
                 if(Math.log2(this.maxRam) % 1 === 0)
                 {
-                    this.maxRamParam =  "-Xmx" + this.maxRam + "M";
+                    this.maxRamParam = "-Xmx" + this.maxRam + "M";
                 }
                 else
                 {
@@ -79,7 +79,8 @@ export class ParametersManager
                 '-XX:+CMSIncrementalMode',
                 '-XX:-UseAdaptiveSizePolicy',
                 '-Dfml.ignoreInvalidMinecraftCertificates=true',
-                '-Dfml.ignorePatchDiscrepancies=true'
+                '-Dfml.ignorePatchDiscrepancies=true',
+                '-XX:+IgnoreUnrecognizedVMOptions'
         ];
     }
 

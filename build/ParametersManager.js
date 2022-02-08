@@ -7,6 +7,13 @@ class ParametersManager {
     size;
     minRamParam;
     maxRamParam;
+    /**
+     *
+     * @param minRam    (MIN = 1024)
+     * @param maxRam  (MAX = 16384)
+     * @param size "Style of the size, 'M' for MO AND 'G' for 'G'"
+     * exemple : (3, 16, "G");
+     */
     constructor(minRam, maxRam, size = "M") {
         this.minRam = minRam;
         this.maxRam = maxRam;
@@ -67,7 +74,8 @@ class ParametersManager {
             '-XX:+CMSIncrementalMode',
             '-XX:-UseAdaptiveSizePolicy',
             '-Dfml.ignoreInvalidMinecraftCertificates=true',
-            '-Dfml.ignorePatchDiscrepancies=true'
+            '-Dfml.ignorePatchDiscrepancies=true',
+            '-XX:+IgnoreUnrecognizedVMOptions'
         ];
     }
     getRamParameters() {
