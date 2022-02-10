@@ -1,5 +1,3 @@
-import fs = require('fs');
-
 export class JavaPath {
 
     /**

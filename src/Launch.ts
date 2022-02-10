@@ -1,4 +1,3 @@
-import path = require('path');
 import { DirectoryManager } from './DirectoryManager';
 import { JavaPath } from './JavaPath';
 import { GameVersion } from './GameVersion';

@@ -1,6 +1,6 @@
 import { Launch } from "./Launch";
 import { ProcessProfile } from "./ProcessProfile";
-import { ChildProcess, exec, spawn} from "child_process"; 
+import { exec, spawn} from "child_process"; 
 
 export class ProcessManager {
 

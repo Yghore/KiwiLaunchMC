@@ -1,5 +1,4 @@
-import path = require('path');
-import fs = require('fs');
+import * as path from "path";
 import { ArrayToCommand } from './Utils/ArrayToCommand';
 import { RecursiveFolderJar } from './Utils/RecursiveFolderJar';
 
@@ -70,6 +69,17 @@ export class DirectoryManager {
     // }
 
 
+
+    // public getLibsWithJson(dir : string) : string[]
+    // {
+    //     // libraries->downloads->artifact->path;
+    //     var dataout = JSON.parse(fs.readFileSync(dir).toString());
+    //     console.log(dataout.libraries.forEach(data => {
+    //         console.log(data.downloads.artifact.path);
+    //     }));
+    //     console.log("FIN");
+    //     return [];
+    // }
 
     public getLibsParameter() : string[]
     {
