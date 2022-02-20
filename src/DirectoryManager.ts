@@ -23,7 +23,7 @@ export class DirectoryManager {
         }
 
 
-    public getGameDirDirectory() : string  {
+    public getGameDirectory() : string  {
         return this.gameDir;
     }
 
@@ -45,6 +45,7 @@ export class DirectoryManager {
     public getLibsDirectory() : string  {
         return path.join(this.gameDir, this.libs);
     }
+
 
     
 
@@ -95,7 +96,7 @@ export class DirectoryManager {
 
     public getGameDirParameter() : string[]
     {
-        return ["--gameDir", this.getGameDirDirectory()];
+        return ["--gameDir", this.getGameDirectory()];
     }
 
 

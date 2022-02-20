@@ -10,7 +10,7 @@ For construct the folder :
 - Get natives in : 'https://packs.alwyn974.re/' (only natives, the libs not fix for log4j)
 ## Use :
 
-Exemple : 
+1 - Exemple (Without Updater): 
 
 ```ts
 
@@ -28,6 +28,56 @@ var cmd = new KLaunch.Launch(java, parameters, dir, ver, auth);
 console.log(cmd.launch()); // Print the fully command (Not execute for the moment)
 
 ```
+
+2 - Exemple (With Updater, WITH official MANISFEST Minecraft)
+PS : 
+    - The updater, re-download the ALL FILES in every start (to be fixed in a future... )
+    - Vanilla support Only (forge, optifine to be added in a future... )
+    - Extra of the player is not delete .. (to be fixed in a future... )
+
+```ts
+
+
+(async function(){
+
+    const KLaunch = require('@kiwigdc/kiwilaunch')
+
+    var dir = new KLaunch.DirectoryManager("C:/Users/yhgor/AppData/Roaming/.LauncherTest", "natives", "libs", "minecraft.jar", "assets");
+    var ver = new KLaunch.GameVersion(MinecraftVersion.V1_8_HIGHER, GameTweak.VANILLA, "1.12", "1.12.2");
+    var mani = new KLaunch.ManifestGameVersion(ver, dir);
+    var parameters = new KLaunch.ParametersManager(1024, 2048 , "M");
+    var java = new KLaunch.JavaPath("java"); // Use java or directory (bin/java is add into class)
+    var auth = new KLaunch.AuthManager("Player2042", "sry", "nope");
+    var globalLaunch = new KLaunch.Launch(java, parameters, dir, ver, auth);
+    var process = new KLaunch.ProcessManager(globalLaunch, ProcessProfile.INTERNAL);
+    
+    
+    await mani.setManisfest();
+    await mani.updateGame();
+
+    let launch = process.Launch();
+
+
+    console.log(globalLaunch.getLaunchExternalProfile());
+    console.log("Start game !");
+
+    launch.stdout.on('data', function (data: { toString: () => any; }) {
+        console.log(data.toString());
+    });
+
+    launch.stderr.on('data', function (data: { toString: () => string; }) {
+        console.log('ERROR :' + data.toString());
+    });
+
+
+    
+
+
+
+})();
+
+```
+
 
 # Other informations :
 

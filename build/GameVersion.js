@@ -7,8 +7,9 @@ class GameVersion {
     version;
     tweak;
     versionIndex;
-    tweaker;
+    versionManisfest;
     mainClass = "net.minecraft.client.main.Main";
+    tweaker;
     // 1.13.2 ou plus haut avec forge : 'cpw.mods.modlauncher.Launcher'
     // 1.8 ou plus haut : 'net.minecraft.client.main.Main'
     // 1.7.2 ou plus bas : 'net.minecraft.client.main.Main'
@@ -19,10 +20,11 @@ class GameVersion {
      * @param tweak The GameTweak (System of minecraft, forge, vanilla, etc... use Enum GameTweak)
      * @param versionIndex The version of games (1.12.2, 1.8.8, etc...)
      */
-    constructor(version, tweak, versionIndex) {
+    constructor(version, tweak, versionIndex, versionManisfest) {
         this.version = version;
         this.tweak = tweak;
         this.versionIndex = versionIndex;
+        this.versionManisfest = versionManisfest;
         if (tweak == GameTweak_1.GameTweak.FORGE) {
             if (version == MinecraftVersion_1.MinecraftVersion.V1_13_2_HIGHER) {
                 this.mainClass = 'cpw.mods.modlauncher.Launcher';
@@ -48,7 +50,7 @@ class GameVersion {
         return [];
     }
     getVersionParameter() {
-        return ["--version", this.versionIndex];
+        return ["--version", this.versionManisfest];
     }
     getAssetIndexParameter() {
         return ["--assetIndex", this.versionIndex];

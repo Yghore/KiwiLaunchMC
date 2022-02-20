@@ -3,10 +3,8 @@ import { MinecraftVersion } from "./MinecraftVersion";
 
 export class GameVersion {
 
-    
-    private tweaker : string | null;
-    private mainClass : string = "net.minecraft.client.main.Main";
-    
+    public mainClass : string = "net.minecraft.client.main.Main";
+    private tweaker : string | null;    
 
     
     // 1.13.2 ou plus haut avec forge : 'cpw.mods.modlauncher.Launcher'
@@ -21,12 +19,12 @@ export class GameVersion {
      * @param tweak The GameTweak (System of minecraft, forge, vanilla, etc... use Enum GameTweak)
      * @param versionIndex The version of games (1.12.2, 1.8.8, etc...)
      */
-    constructor(public version : MinecraftVersion, public tweak : GameTweak, public versionIndex : string) {
+    constructor(public version : MinecraftVersion, public tweak : GameTweak, public versionIndex : string, public versionManisfest : string) {
         if(tweak == GameTweak.FORGE)
         {   
             if(version == MinecraftVersion.V1_13_2_HIGHER)
             {
-                this.mainClass = 'cpw.mods.modlauncher.Launcher'
+                this.mainClass = 'cpw.mods.modlauncher.Launcher';
             }
             if(version == MinecraftVersion.V1_7_10)
             {
@@ -41,6 +39,7 @@ export class GameVersion {
         {
             this.tweak = null;
         }
+
         
     }
 
@@ -63,7 +62,7 @@ export class GameVersion {
 
     public getVersionParameter() : string[]
     {
-        return ["--version", this.versionIndex];
+        return ["--version", this.versionManisfest];
     }
 
 

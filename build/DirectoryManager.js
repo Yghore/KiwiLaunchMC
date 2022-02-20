@@ -26,7 +26,7 @@ class DirectoryManager {
         this.assetsDir = assetsDir;
         this.gameDir = gameDir;
     }
-    getGameDirDirectory() {
+    getGameDirectory() {
         return this.gameDir;
     }
     /**
@@ -59,6 +59,16 @@ class DirectoryManager {
     //       libs += this.getmainJar() + " ";
     //     return libs;
     // }
+    // public getLibsWithJson(dir : string) : string[]
+    // {
+    //     // libraries->downloads->artifact->path;
+    //     var dataout = JSON.parse(fs.readFileSync(dir).toString());
+    //     console.log(dataout.libraries.forEach(data => {
+    //         console.log(data.downloads.artifact.path);
+    //     }));
+    //     console.log("FIN");
+    //     return [];
+    // }
     getLibsParameter() {
         var arr = ["-cp", ArrayToCommand_1.ArrayToCommand.convert(RecursiveFolderJar_1.RecursiveFolderJar.getAllFiles(this.getLibsDirectory()), ";").concat(this.getmainJar())];
         return arr;
@@ -67,7 +77,7 @@ class DirectoryManager {
         return ["-Djava.library.path=" + this.getNativesDirectory()];
     }
     getGameDirParameter() {
-        return ["--gameDir", this.getGameDirDirectory()];
+        return ["--gameDir", this.getGameDirectory()];
     }
     getAssetsDirParameter() {
         return ["--assetsDir", this.getAssetDirDirectory()];

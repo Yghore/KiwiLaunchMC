@@ -13,7 +13,7 @@ export declare class DirectoryManager {
      * @param assetsDir assets
      */
     constructor(gameDir: string, natives: string, libs: string, mainJar: string, assetsDir: string);
-    getGameDirDirectory(): string;
+    getGameDirectory(): string;
     /**
      * getNativesDirectory
      */
