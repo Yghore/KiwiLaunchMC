@@ -38,7 +38,7 @@ class DirectoryManager {
     getmainJar() {
         return path.join(this.gameDir, this.mainJar);
     }
-    getAssetDirDirectory() {
+    getAssetDirectory() {
         return path.join(this.gameDir, this.assetsDir);
     }
     getLibsDirectory() {
@@ -80,7 +80,7 @@ class DirectoryManager {
         return ["--gameDir", this.getGameDirectory()];
     }
     getAssetsDirParameter() {
-        return ["--assetsDir", this.getAssetDirDirectory()];
+        return ["--assetsDir", this.getAssetDirectory()];
     }
 }
 exports.DirectoryManager = DirectoryManager;

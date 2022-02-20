@@ -19,7 +19,7 @@ export declare class DirectoryManager {
      */
     getNativesDirectory(): string;
     getmainJar(): string;
-    getAssetDirDirectory(): string;
+    getAssetDirectory(): string;
     getLibsDirectory(): string;
     getLibsParameter(): string[];
     getNativesParameter(): string[];

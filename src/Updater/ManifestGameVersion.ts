@@ -58,8 +58,17 @@ export class ManifestGameVersion {
             downloadFilesList.push(this.ASSETS_URL + hash.substring(0,2) + "/" + hash);
          }
 
-        await Promise.all(downloadFilesList.map(url => download(url, path.join(this.dir.getAssetDirDirectory(), 'objects', url.split('/').pop().substring(0,2)))));
-        await download(this.gameProperties[0].assetIndex.url, path.join(this.dir.getAssetDirDirectory(), "indexes"));
+        await Promise.all(downloadFilesList.map(async url => 
+        {
+            const filePath = url.split('/').pop();
+            const passedPath = path.join(this.dir.getAssetDirectory(), 'objects', filePath.substring(0,2));
+            fs.mkdirSync(passedPath, { recursive: true })
+            fs.writeFileSync(path.join(this.dir.getAssetDirectory(), 'objects', filePath.substring(0,2), filePath), 
+            await download(url))
+        }));
+
+        //await Promise.all(downloadFilesList.map(url => download(url, path.join(this.dir.getAssetDirDirectory(), 'objects', url.split('/').pop().substring(0,2)))));
+        await download(this.gameProperties[0].assetIndex.url, path.join(this.dir.getAssetDirectory(), "indexes"));
     }
 
     public async downloadsLibrariesFiles()

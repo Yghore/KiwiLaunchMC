@@ -3,7 +3,7 @@
 
 ## Construct folder (.LauncherTest for exemple)
 
-For construct the folder : 
+Construct the folder (if you doesn't want use updater): 
 - Get the jar of the version in '.minecraft/versions/{VERSION}/{VERSION}.jar
 - Get all assets
 - Get libs for your version (libs in the .minecraft/versions/{VERSION}/{VERSION}.json)
