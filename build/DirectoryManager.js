@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.DirectoryManager = void 0;
 const path = require("path");
 const ArrayToCommand_1 = require("./Utils/ArrayToCommand");
-const RecursiveFolderJar_1 = require("./Utils/RecursiveFolderJar");
+const RecursiveFolderFile_1 = require("./Utils/RecursiveFolderFile");
 class DirectoryManager {
     gameDir;
     natives;
@@ -70,7 +70,7 @@ class DirectoryManager {
     //     return [];
     // }
     getLibsParameter() {
-        var arr = ["-cp", ArrayToCommand_1.ArrayToCommand.convert(RecursiveFolderJar_1.RecursiveFolderJar.getAllFiles(this.getLibsDirectory()), ";").concat(this.getmainJar())];
+        var arr = ["-cp", ArrayToCommand_1.ArrayToCommand.convert(RecursiveFolderFile_1.RecursiveFolderFile.getAllFiles(this.getLibsDirectory(), [], ".jar").filter(file => !file.includes('natives')), ";").concat(this.getmainJar())];
         return arr;
     }
     getNativesParameter() {

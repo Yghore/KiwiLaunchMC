@@ -10,11 +10,13 @@ const MinecraftVersion_1 = require("./MinecraftVersion");
 const ParametersManager_1 = require("./ParametersManager");
 const ProcessManager_1 = require("./ProcessManager");
 const ProcessProfile_1 = require("./ProcessProfile");
-const ManifestGameVersion_1 = require("./Updater/ManifestGameVersion");
+const FileDeleter_1 = require("./Updater/FileDeleter");
+const OfficialManifestGameVersion_1 = require("./Updater/OfficialManifestGameVersion");
 (async function () {
     var dir = new DirectoryManager_1.DirectoryManager("C:/Users/yhgor/AppData/Roaming/.LauncherTest", "natives", "libs", "minecraft.jar", "assets");
     var ver = new GameVersion_1.GameVersion(MinecraftVersion_1.MinecraftVersion.V1_8_HIGHER, GameTweak_1.GameTweak.VANILLA, "1.12", "1.12.2");
-    var mani = new ManifestGameVersion_1.ManifestGameVersion(ver, dir);
+    var mani = new OfficialManifestGameVersion_1.OfficialManifestGameVersion(ver, dir);
+    var deleter = new FileDeleter_1.FileDeleter(dir, mani);
     var parameters = new ParametersManager_1.ParametersManager(1024, 2048, "M");
     var java = new JavaPath_1.JavaPath("java"); // Use java or directory (bin/java is add into class)
     var auth = new AuthManager_1.AuthManager("Player2042", "sry", "nope");

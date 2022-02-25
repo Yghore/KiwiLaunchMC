@@ -10,13 +10,15 @@ import { MinecraftVersion } from "./MinecraftVersion";
 import { ParametersManager } from "./ParametersManager";
 import { ProcessManager } from "./ProcessManager";
 import { ProcessProfile } from "./ProcessProfile";
-import { ManifestGameVersion } from "./Updater/ManifestGameVersion";
+import { FileDeleter } from "./Updater/FileDeleter";
+import { OfficialManifestGameVersion } from "./Updater/OfficialManifestGameVersion";
 
 (async function(){
 
     var dir = new DirectoryManager("C:/Users/yhgor/AppData/Roaming/.LauncherTest", "natives", "libs", "minecraft.jar", "assets");
     var ver = new GameVersion(MinecraftVersion.V1_8_HIGHER, GameTweak.VANILLA, "1.12", "1.12.2");
-    var mani = new ManifestGameVersion(ver, dir);
+    var mani = new OfficialManifestGameVersion(ver, dir);
+    var deleter = new FileDeleter(dir, mani);
     var parameters = new ParametersManager(1024, 2048 , "M");
     var java = new JavaPath("java"); // Use java or directory (bin/java is add into class)
     var auth = new AuthManager("Player2042", "sry", "nope");
@@ -26,6 +28,7 @@ import { ManifestGameVersion } from "./Updater/ManifestGameVersion";
     
     await mani.setManisfest();
     await mani.updateGame();
+
 
     let launch = process.Launch();
 

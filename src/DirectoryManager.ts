@@ -1,6 +1,6 @@
 import * as path from "path";
 import { ArrayToCommand } from './Utils/ArrayToCommand';
-import { RecursiveFolderJar } from './Utils/RecursiveFolderJar';
+import { RecursiveFolderFile } from './Utils/RecursiveFolderFile';
 
 
 export class DirectoryManager {
@@ -84,7 +84,7 @@ export class DirectoryManager {
 
     public getLibsParameter() : string[]
     {
-        var arr : string[] = ["-cp", ArrayToCommand.convert(RecursiveFolderJar.getAllFiles(this.getLibsDirectory()), ";").concat(this.getmainJar())];
+        var arr : string[] = ["-cp", ArrayToCommand.convert(RecursiveFolderFile.getAllFiles(this.getLibsDirectory(), [], ".jar").filter(file => !file.includes('natives')), ";").concat(this.getmainJar())];
         return arr;
     }
 
