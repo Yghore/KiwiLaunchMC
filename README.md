@@ -44,7 +44,7 @@ PS :
 
     var dir = new KLaunch.DirectoryManager("C:/Users/yhgor/AppData/Roaming/.LauncherTest", "natives", "libs", "minecraft.jar", "assets");
     var ver = new KLaunch.GameVersion(MinecraftVersion.V1_8_HIGHER, GameTweak.VANILLA, "1.12", "1.12.2");
-    var mani = new KLaunch.ManifestGameVersion(ver, dir);
+    var mani = new KLaunch.VanillaUpdater(ver, dir);
     var parameters = new KLaunch.ParametersManager(1024, 2048 , "M");
     var java = new KLaunch.JavaPath("java"); // Use java or directory (bin/java is add into class)
     var auth = new KLaunch.AuthManager("Player2042", "sry", "nope");

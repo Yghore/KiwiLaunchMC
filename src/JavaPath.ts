@@ -1,3 +1,5 @@
+import * as path from "path";
+
 export class JavaPath {
 
     /**
@@ -13,7 +15,7 @@ export class JavaPath {
         else
         {
 
-            this.javaPath = javaPath.concat('bin/java');
+            this.javaPath = path.join(this.javaPath, 'bin/java');
             
         }
             

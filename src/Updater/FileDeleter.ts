@@ -1,10 +1,10 @@
 import { DirectoryManager } from "..";
 import { RecursiveFolderFile } from "../Utils/RecursiveFolderFile";
-import { OfficialManifestGameVersion } from "./OfficialManifestGameVersion";
+import { VanillaUpdater } from "./VanillaUpdater";
 
 export class FileDeleter {
 
-    constructor(public dir : DirectoryManager, public manifest : OfficialManifestGameVersion){}
+    constructor(public dir : DirectoryManager, public manifest : VanillaUpdater){}
 
     public start()
     {

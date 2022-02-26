@@ -11,7 +11,7 @@ import { LibsInformations } from "../Utils/LibsInformations";
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
 
-export class OfficialManifestGameVersion {
+export class VanillaUpdater implements ManifestVanillaVersion {
 
     readonly MANIFEST_URL : string = "https://launchermeta.mojang.com/mc/game/version_manifest.json";
     readonly ASSETS_URL : string = "https://resources.download.minecraft.net/";
@@ -21,7 +21,7 @@ export class OfficialManifestGameVersion {
     public gameProperties;
     public assetIndex;
 
-    constructor(public gameVersion : GameVersion, private dir : DirectoryManager) {}
+    constructor(public gameVersion : GameVersion, public dir : DirectoryManager) {}
 
     
     public getGameProperties()
@@ -29,10 +29,6 @@ export class OfficialManifestGameVersion {
         return this.gameProperties;
     }
 
-    public getFiles()
-    {
-        return [this.gameProperties, this.assetIndex];
-    }
 
     /**
      * get
@@ -89,6 +85,8 @@ export class OfficialManifestGameVersion {
         await download(this.gameProperties[0].assetIndex.url, path.join(this.dir.getAssetDirectory(), "indexes"));
     }
 
+
+
     public async downloadsLibrariesFiles()
     {
         var downloadFilesList : Array<{url: string, name: string, hash: string}> = [];
@@ -143,6 +141,8 @@ export class OfficialManifestGameVersion {
         //fs.writeFileSync(this.dir.getmainJar(), await download(this.gameProperties[0].downloads.client.url));
         await this.checkDownloadFiles(this.gameProperties[0].downloads.client.url, this.gameProperties[0].downloads.client.sha1, this.dir.getmainJar());
     }
+
+
 
 
     public async extractNatives(filePath : string)

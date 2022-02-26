@@ -1,4 +1,4 @@
-import { GameTweak } from "./GameTweak";
+import { GameTweak } from "../GameTweak";
 import { MinecraftVersion } from "./MinecraftVersion";
 
 export class GameVersion {
@@ -33,6 +33,7 @@ export class GameVersion {
             else if(version == MinecraftVersion.V1_8_HIGHER)
             {
                 this.tweaker = "net.minecraftforge.fml.common.launcher.FMLTweaker";
+                this.mainClass = "net.minecraft.launchwrapper.Launch";
             }
         }
         else

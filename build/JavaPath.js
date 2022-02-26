@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.JavaPath = void 0;
+const path = require("path");
 class JavaPath {
     javaPath;
     /**
@@ -13,7 +14,7 @@ class JavaPath {
             this.javaPath = "java";
         }
         else {
-            this.javaPath = javaPath.concat('bin/java');
+            this.javaPath = path.join(this.javaPath, 'bin/java');
         }
     }
     /**
