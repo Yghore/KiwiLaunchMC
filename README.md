@@ -1,16 +1,9 @@
 # KiwiLaunchMC
  Librairie for start the minecraft game in NodeJS
 
-## Construct folder (.LauncherTest for exemple)
-
-Construct the folder (if you doesn't want use updater): 
-- Get the jar of the version in '.minecraft/versions/{VERSION}/{VERSION}.jar
-- Get all assets
-- Get libs for your version (libs in the .minecraft/versions/{VERSION}/{VERSION}.json)
-- Get natives in : 'https://packs.alwyn974.re/' (only natives, the libs not fix for log4j)
 ## Use :
 
-1 - Exemple (Without Updater): 
+1 - Exemple (without Updater): 
 
 ```ts
 
@@ -27,11 +20,17 @@ var cmd = new KLaunch.Launch(java, parameters, dir, ver, auth);
 
 console.log(cmd.launch()); // Print the fully command (Not execute for the moment)
 
+
+Discord support : https://discord.gg/WsyYnWSmwE
+
+# Support VERSION :
+    - VANILLA : 1.7.10, 1.8.X, 1.9.X, 1.10.X, 1.11.X, 1.12.X, 1.13.X, 1.14.X, 1.15.X, 1.16.X, 1.17.X, 1.18.X
+    - FORGE : 1.7.10, 1.8.8, 1.12.2
 ```
 
 2 - Exemple (With Updater, WITH official MANISFEST Minecraft)
 PS : 
-    - The updater, re-download the ALL FILES in every start (to be fixed in a future... )
+
     - Vanilla support Only (forge, optifine to be added in a future... )
     - Extra of the player is not delete .. (to be fixed in a future... )
 

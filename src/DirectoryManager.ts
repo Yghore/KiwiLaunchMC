@@ -88,6 +88,18 @@ export class DirectoryManager {
         return arr;
     }
 
+    // public loadLibs;
+
+    // public getLibsParameter() : string[]
+    // {   
+    //     return ["-cp"].concat(ArrayToCommand.convert(this.loadLibs, ";"));
+    // }
+
+    // public setLibs(properties: string[])
+    // {
+    //     this.loadLibs = properties;
+    // }
+
     public getNativesParameter() : string[]
     {
         return ["-Djava.library.path=" + this.getNativesDirectory()];

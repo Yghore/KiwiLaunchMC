@@ -5,6 +5,7 @@ class ParametersManager {
     minRam;
     maxRam;
     size;
+    extra;
     minRamParam;
     maxRamParam;
     /**
@@ -14,10 +15,11 @@ class ParametersManager {
      * @param size "Style of the size, 'M' for MO AND 'G' for 'G'"
      * exemple : (3, 16, "G");
      */
-    constructor(minRam, maxRam, size = "M") {
+    constructor(minRam, maxRam, size = "M", extra) {
         this.minRam = minRam;
         this.maxRam = maxRam;
         this.size = size;
+        this.extra = extra;
         if (this.maxRam < this.minRam) {
             throw new Error("minRam > MaxRam : (Impossible)");
         }
@@ -77,6 +79,9 @@ class ParametersManager {
             '-Dfml.ignorePatchDiscrepancies=true',
             '-XX:+IgnoreUnrecognizedVMOptions'
         ];
+    }
+    getExtraParameters() {
+        return this.extra == undefined ? [] : this.extra;
     }
     getRamParameters() {
         return [this.minRamParam, this.maxRamParam];

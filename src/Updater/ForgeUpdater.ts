@@ -4,13 +4,16 @@ import download = require("download");
 import path = require("path");
 import hasha = require("hasha");
 import { LibsInformations } from "../Utils/LibsInformations";
+import { ForgeVersion } from "../Version/ForgeVersion";
+import { exec, spawn} from "child_process"; 
+import StreamZip = require("node-stream-zip");
 
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
 export class ForgeUpdater implements ManifestForgeVersion {
 
 
-    readonly FORGE_URL = "https://api.alldeadreturn.fr/forge-1.12.2.json";
+    readonly FORGE_URL = "https://maven.minecraftforge.net/net/minecraftforge/forge/";
 
     forgeProperties: any;
     gameProperties: any;
@@ -24,8 +27,20 @@ export class ForgeUpdater implements ManifestForgeVersion {
         this.forgeProperties = await fetch(this.FORGE_URL, settings).then(res => res.json())
     }
 
+    public async isForgeInstalled() : Promise<boolean>
+    {
+        return fs.existsSync(path.join(this.dir.getLibsDirectory(), "forge-" + this.gameVersion.getMcVer() + "-" + this.gameVersion.getForgeVer() + ".jar"));
+    }
+
     
-    public async updateGame(): Promise<void> {
+    public async updateGame() {
+        if(await this.isForgeInstalled())
+        {
+            console.log("Forge déjà installé...");
+            return;
+        }
+
+        await this.downloadsForgeFiles();
         await this.downloadsLibrariesFiles();
     }
 
@@ -38,14 +53,38 @@ export class ForgeUpdater implements ManifestForgeVersion {
 
     public async downloadsForgeFiles()
     {
-        this.checkDownloadFiles(fileInfo.url, fileInfo.hash, path.join(this.dir.getLibsDirectory(), path.basename(fileInfo.url)))
+        
+        console.log("DOWNLOAD....");
+        var url : string = this.FORGE_URL + this.gameVersion.getMcVer() + "-" + this.gameVersion.getForgeVer() + "/forge-" + this.gameVersion.getMcVer() + "-" + this.gameVersion.getForgeVer() + "-installer.jar";
+        var file = path.join(this.dir.getGameDirectory(), "forge-installer.jar");
+        await this.checkDownloadFiles(url, "", file);
+        console.log("FILE : %s | URL : %s", file, url);
+        spawn("java", ["-jar", file, "--extract", this.dir.getLibsDirectory()], {cwd: this.dir.gameDir});
+        console.log("EXCTRACTION du forge");
+        const zip = new StreamZip.async({ file: file});
+        const entries = await zip.entries();
+        for await(const entry of Object.values(entries)) 
+        {   
+            if(entry.isFile && entry.name == "version.json")
+            {
+                await zip.extract(entry.name, this.dir.getGameDirectory());
+                console.log("Extraction : " + entry.name);
+            }
+
+            
+        }
+        //const count = await zip.extract(null, this.dir.getNativesDirectory());
+
+        await zip.close();
+
+        this.forgeProperties = require(path.join(this.dir.getGameDirectory(), 'version.json'));
+
     }
 
     public async downloadsLibrariesFiles()
     {
         var downloadFilesList : Array<{url: string, name: string, hash: string}> = [];
-        
-        await this.forgeProperties.libraries.forEach(async val => {
+        await this.forgeProperties.libraries.forEach((val: { name: string; downloads: { artifact: { url: string; sha1: any; }; }; }) => {
             var LibsInfo = new LibsInformations(val.name);            
             if(val.downloads.artifact != undefined) 
             {
@@ -54,12 +93,12 @@ export class ForgeUpdater implements ManifestForgeVersion {
             
                 
         });
-        await Promise.all(downloadFilesList.map(fileInfo => 
+        await Promise.all(downloadFilesList.map(async fileInfo => 
             //download(fileInfo.url, this.dir.getLibsDirectory())
             {
-            this.checkDownloadFiles(fileInfo.url, fileInfo.hash, path.join(this.dir.getLibsDirectory(), path.basename(fileInfo.url)))
+                await this.checkDownloadFiles(fileInfo.url, fileInfo.hash, path.join(this.dir.getLibsDirectory(), path.basename(fileInfo.url)))
             }
-            ));
+        ));
     }
 
 
@@ -85,7 +124,7 @@ export class ForgeUpdater implements ManifestForgeVersion {
         }
         else
         {
-            if(hasha.fromFileSync(dist, {algorithm: 'sha1'}) != hash){
+            if(hash != "" && hasha.fromFileSync(dist, {algorithm: 'sha1'}) != hash){
                 fs.writeFileSync(dist, await download(url));
                 isChanged = true;
                 console.log(dist);

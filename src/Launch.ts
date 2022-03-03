@@ -50,6 +50,7 @@ export class Launch {
         cmd += ArrayToCommand.convert(this.authManager.getUuidParameter());
         cmd += ArrayToCommand.convert(this.authManager.getUserTypeParameter());
         cmd += ArrayToCommand.convert(this.gameVersion.getTweakerParameter());
+        cmd += ArrayToCommand.convert(this.parametersManager.getExtraParameters());
         return cmd;
     }
 
@@ -71,6 +72,7 @@ export class Launch {
         cmd = cmd.concat(this.authManager.getUuidParameter());
         cmd = cmd.concat(this.authManager.getUserTypeParameter());
         cmd = cmd.concat(this.gameVersion.getTweakerParameter());
+        cmd = cmd.concat(this.parametersManager.getExtraParameters());
         return cmd;
     }
 

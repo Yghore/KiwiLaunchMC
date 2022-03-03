@@ -22,6 +22,8 @@ export declare class DirectoryManager {
     getAssetDirectory(): string;
     getLibsDirectory(): string;
     getLibsParameter(): string[];
+    loadLibs: any;
+    setLibs(properties: string[]): void;
     getNativesParameter(): string[];
     getGameDirParameter(): string[];
     getAssetsDirParameter(): string[];

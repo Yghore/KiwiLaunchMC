@@ -20,6 +20,8 @@ export class VanillaUpdater implements ManifestVanillaVersion {
 
     public gameProperties;
     public assetIndex;
+    public libsLoad : Array<string> = [];
+
 
     constructor(public gameVersion : GameVersion, public dir : DirectoryManager) {}
 
@@ -90,8 +92,8 @@ export class VanillaUpdater implements ManifestVanillaVersion {
     public async downloadsLibrariesFiles()
     {
         var downloadFilesList : Array<{url: string, name: string, hash: string}> = [];
-        
-        await this.gameProperties[0].libraries.forEach(async val => {
+
+        await Promise.all(this.gameProperties[0].libraries.map(async val => {
             var LibsInfo = new LibsInformations(val.name);            
             if(val['natives'] != undefined)
             {
@@ -100,8 +102,12 @@ export class VanillaUpdater implements ManifestVanillaVersion {
                     var nativesUsed : string = val['natives']['windows'];
                     var filePath = path.join(this.dir.getLibsDirectory(), path.basename(val['downloads']['classifiers'][nativesUsed]['url']));
                     //fs.writeFileSync(filePath, await download(val['downloads']['classifiers']['natives-windows']['url']));
-                    var downloaded = await this.checkDownloadFiles(val['downloads']['classifiers'][nativesUsed]['url'], val['downloads']['classifiers'][nativesUsed]['sha1'], filePath);
-                    if(downloaded) await this.extractNatives(filePath);
+                    var index = downloadFilesList.findIndex(file => new LibsInformations(file.name).getName() == LibsInfo.getName());
+                    //if(index == -1 || LibsInfo.compareVersion(new LibsInformations(downloadFilesList[index].name).getVersion())){
+                        var downloaded = await this.checkDownloadFiles(val['downloads']['classifiers'][nativesUsed]['url'], val['downloads']['classifiers'][nativesUsed]['sha1'], filePath);
+                        if(downloaded) await this.extractNatives(filePath);
+                
+                    //}
                 }
             }
             if(val.downloads.artifact != undefined) 
@@ -110,6 +116,7 @@ export class VanillaUpdater implements ManifestVanillaVersion {
                 if(index == -1)
                 {
                     downloadFilesList.push({url: val.downloads.artifact.url, name: val.name, hash: val.downloads.artifact.sha1});
+                    this.libsLoad.push(path.join(this.dir.getLibsDirectory(), (val.downloads.artifact.url).substring(val.downloads.artifact.url.lastIndexOf("/") + 1)));
                 }
                 else
                 {
@@ -117,18 +124,20 @@ export class VanillaUpdater implements ManifestVanillaVersion {
                     if(LibsInfo.compareVersion(new LibsInformations(downloadFilesList[index].name).getVersion()))
                     {
                         downloadFilesList[index] = {url: val.downloads.artifact.url, name: val.name, hash: val.downloads.artifact.sha1};
-                    }
+                        this.libsLoad.push(path.join(this.dir.getLibsDirectory(), (val.downloads.artifact.url).substring(val.downloads.artifact.url.lastIndexOf("/") + 1)));                    }
                 }
             }
-            
+    
                 
-        });
-        await Promise.all(downloadFilesList.map(fileInfo => 
+        }));
+
+
+        await Promise.all(downloadFilesList.map(async fileInfo => 
             //download(fileInfo.url, this.dir.getLibsDirectory())
             {
-            this.checkDownloadFiles(fileInfo.url, fileInfo.hash, path.join(this.dir.getLibsDirectory(), path.basename(fileInfo.url)))
+                await this.checkDownloadFiles(fileInfo.url, fileInfo.hash, path.join(this.dir.getLibsDirectory(), path.basename(fileInfo.url)))
             }
-            ));
+        ));
     }
 
 
@@ -169,6 +178,7 @@ export class VanillaUpdater implements ManifestVanillaVersion {
 
         await zip.close();
     }
+
 
     public async checkDownloadFiles(url : string, hash : string, dist: string) : Promise<boolean>
     {

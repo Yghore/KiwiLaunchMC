@@ -73,6 +73,14 @@ class DirectoryManager {
         var arr = ["-cp", ArrayToCommand_1.ArrayToCommand.convert(RecursiveFolderFile_1.RecursiveFolderFile.getAllFiles(this.getLibsDirectory(), [], ".jar").filter(file => !file.includes('natives')), ";").concat(this.getmainJar())];
         return arr;
     }
+    loadLibs;
+    // public getLibsParameter() : string[]
+    // {   
+    //     return ["-cp"].concat(ArrayToCommand.convert(this.loadLibs, ";"));
+    // }
+    setLibs(properties) {
+        this.loadLibs = properties;
+    }
     getNativesParameter() {
         return ["-Djava.library.path=" + this.getNativesDirectory()];
     }

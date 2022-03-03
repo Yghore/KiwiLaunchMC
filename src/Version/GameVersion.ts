@@ -22,6 +22,10 @@ export class GameVersion {
     constructor(public version : MinecraftVersion, public tweak : GameTweak, public versionIndex : string, public versionManisfest : string) {
         if(tweak == GameTweak.FORGE)
         {   
+            if(version == MinecraftVersion.V1_17_HIGHER)
+            {
+                this.mainClass = "cpw.mods.bootstraplauncher.BootstrapLauncher";
+            }
             if(version == MinecraftVersion.V1_13_2_HIGHER)
             {
                 this.mainClass = 'cpw.mods.modlauncher.Launcher';

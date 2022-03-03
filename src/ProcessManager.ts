@@ -2,13 +2,15 @@ import { Launch } from "./Launch";
 import { ProcessProfile } from "./ProcessProfile";
 import { exec, spawn} from "child_process"; 
 
+
+
 export class ProcessManager {
 
     private process;
     constructor(public launch : Launch, public profile : ProcessProfile) 
     {}
 
-    public Launch()
+    public async Launch()
     {
         if(this.profile === ProcessProfile.EXTERNAL)
         {

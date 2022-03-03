@@ -1,6 +1,6 @@
 import { DirectoryManager } from './DirectoryManager';
 import { JavaPath } from './JavaPath';
-import { GameVersion } from './GameVersion';
+import { GameVersion } from './Version/GameVersion';
 import { ParametersManager } from './ParametersManager';
 import { AuthManager } from './AuthManager';
 export declare class Launch {

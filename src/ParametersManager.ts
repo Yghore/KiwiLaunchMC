@@ -11,7 +11,7 @@ export class ParametersManager
      * @param size "Style of the size, 'M' for MO AND 'G' for 'G'"
      * exemple : (3, 16, "G");
      */
-    constructor(public minRam : number, public maxRam : number, public size : string = "M")
+    constructor(public minRam : number, public maxRam : number, public size : string = "M", public extra? : Array<string>)
     {
         
         
@@ -84,6 +84,11 @@ export class ParametersManager
         ];
     }
 
+
+    public getExtraParameters() : string[]
+    {
+        return this.extra == undefined ? [] : this.extra;
+    }
 
 
     public getRamParameters() : string[] {
