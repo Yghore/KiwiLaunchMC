@@ -1,5 +1,12 @@
 # KiwiLaunchMC
- Librairie for start the minecraft game in NodeJS
+ Librairie for start and update minecraft game in NodeJS
+
+Discord support : https://discord.gg/WsyYnWSmwE
+
+- Extra of the player is not delete .. (to be fixed in a future... )
+# Support VERSION :
+    - VANILLA : 1.7.10, 1.8.X, 1.9.X, 1.10.X, 1.11.X, 1.12.X, 1.13.X, 1.14.X, 1.15.X, 1.16.X, 1.17.X, 1.18.X
+    - FORGE : 1.7.10, 1.8.8, 1.12.2
 
 ## Use :
 
@@ -20,19 +27,10 @@ var cmd = new KLaunch.Launch(java, parameters, dir, ver, auth);
 
 console.log(cmd.launch()); // Print the fully command (Not execute for the moment)
 
-
-Discord support : https://discord.gg/WsyYnWSmwE
-
-# Support VERSION :
-    - VANILLA : 1.7.10, 1.8.X, 1.9.X, 1.10.X, 1.11.X, 1.12.X, 1.13.X, 1.14.X, 1.15.X, 1.16.X, 1.17.X, 1.18.X
-    - FORGE : 1.7.10, 1.8.8, 1.12.2
 ```
 
 2 - Exemple (With Updater, WITH official MANISFEST Minecraft)
-PS : 
 
-    - Vanilla support Only (forge, optifine to be added in a future... )
-    - Extra of the player is not delete .. (to be fixed in a future... )
 
 ```ts
 
