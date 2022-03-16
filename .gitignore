@@ -2,3 +2,4 @@ node_modules/
 build/
 CMD_LAUNCH.txt
 src/test.ts
+.vscode/

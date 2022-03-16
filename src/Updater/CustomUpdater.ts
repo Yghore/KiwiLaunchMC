@@ -1,5 +1,9 @@
 export class CustomUpdater implements ManifestVanillaVersion
 {
+    getAllFiles() {
+        throw new Error("Method not implemented.");
+    }
+    allFiles: string[];
     gameProperties: any;
     dir: any;
     checkDownloadFiles(url: string, hash: string, dist: string): Promise<boolean> {

@@ -18,8 +18,12 @@ export class ForgeUpdater implements ManifestForgeVersion {
     forgeProperties: any;
     gameProperties: any;
     totalDownloadedFiles: any;
+    patchedClient: boolean = false;
+
+    allFiles: string[] = [];
 
     constructor(public gameVersion : ForgeVersion, public dir : DirectoryManager) {}
+
 
     public async setManisfest(): Promise<any> {
         this.gameProperties = [];
@@ -42,6 +46,7 @@ export class ForgeUpdater implements ManifestForgeVersion {
 
         await this.downloadsForgeFiles();
         await this.downloadsLibrariesFiles();
+        //await this.patchClient(); not working, use the forge .jar ?
     }
 
 
@@ -70,6 +75,7 @@ export class ForgeUpdater implements ManifestForgeVersion {
                 await zip.extract(entry.name, this.dir.getGameDirectory());
                 console.log("Extraction : " + entry.name);
             }
+          
 
             
         }
@@ -110,8 +116,10 @@ export class ForgeUpdater implements ManifestForgeVersion {
         return;
     }
 
+  
     public async checkDownloadFiles(url : string, hash : string, dist: string) : Promise<boolean>
     {
+        this.allFiles.push(dist);
         var isChanged : boolean = false;
         if(!fs.existsSync(dist))
         {
@@ -134,6 +142,11 @@ export class ForgeUpdater implements ManifestForgeVersion {
         }
     
         return isChanged;
+    }
+
+
+    getAllFiles() {
+        return this.allFiles;
     }
 
 }

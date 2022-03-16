@@ -18,6 +18,8 @@ export class VanillaUpdater implements ManifestVanillaVersion {
 
     public totalDownloadedFiles : number = 0;
 
+
+    public allFiles : string[] = [];
     public gameProperties;
     public assetIndex;
     public libsLoad : Array<string> = [];
@@ -100,13 +102,13 @@ export class VanillaUpdater implements ManifestVanillaVersion {
                 if(val['natives']['windows'] != undefined)
                 {
                     var nativesUsed : string = val['natives']['windows'];
+                    nativesUsed = nativesUsed.replace("${arch}", "64");
                     var filePath = path.join(this.dir.getLibsDirectory(), path.basename(val['downloads']['classifiers'][nativesUsed]['url']));
                     //fs.writeFileSync(filePath, await download(val['downloads']['classifiers']['natives-windows']['url']));
                     var index = downloadFilesList.findIndex(file => new LibsInformations(file.name).getName() == LibsInfo.getName());
                     //if(index == -1 || LibsInfo.compareVersion(new LibsInformations(downloadFilesList[index].name).getVersion())){
-                        var downloaded = await this.checkDownloadFiles(val['downloads']['classifiers'][nativesUsed]['url'], val['downloads']['classifiers'][nativesUsed]['sha1'], filePath);
-                        if(downloaded) await this.extractNatives(filePath);
-                
+                    var downloaded = await this.checkDownloadFiles(val['downloads']['classifiers'][nativesUsed]['url'], val['downloads']['classifiers'][nativesUsed]['sha1'], filePath);
+                    if(downloaded) await this.extractNatives(filePath);
                     //}
                 }
             }
@@ -130,7 +132,6 @@ export class VanillaUpdater implements ManifestVanillaVersion {
     
                 
         }));
-
 
         await Promise.all(downloadFilesList.map(async fileInfo => 
             //download(fileInfo.url, this.dir.getLibsDirectory())
@@ -172,6 +173,7 @@ export class VanillaUpdater implements ManifestVanillaVersion {
             if(!fs.existsSync(this.dir.getNativesDirectory())){fs.mkdirSync(this.dir.getNativesDirectory(), {recursive: true})}
 
             await zip.extract(entry.name, this.dir.getNativesDirectory());
+
             console.log("Extraction : " + entry.name);
         }
         //const count = await zip.extract(null, this.dir.getNativesDirectory());
@@ -182,6 +184,7 @@ export class VanillaUpdater implements ManifestVanillaVersion {
 
     public async checkDownloadFiles(url : string, hash : string, dist: string) : Promise<boolean>
     {
+        this.allFiles.push(dist);
         var isChanged : boolean = false;
         if(!fs.existsSync(dist))
         {
@@ -204,6 +207,11 @@ export class VanillaUpdater implements ManifestVanillaVersion {
         }
     
         return isChanged;
+    }
+
+    public getAllFiles() : string[]
+    {
+        return this.allFiles;
     }
 
 }

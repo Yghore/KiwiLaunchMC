@@ -2,10 +2,10 @@
   "name": "@kiwigdc/kiwilaunch",
   "version": "2.1.3",
   "description": "Launch minecraft client",
-  "main": "build/index.js",
+  "main": "build/test.js",
   "types": "build/index.d.ts",
   "scripts": {
-    "test": "test"
+    "test": "node build/test.js"
   },
   "author": "Yghore",
   "license": "ISC",
@@ -37,6 +37,7 @@
     "download": "^8.0.0",
     "hasha": "^5.2.2",
     "node-fetch": "^2.6.7",
+    "node-liblzma": "^1.1.6",
     "node-stream-zip": "^1.15.0"
   }
 }

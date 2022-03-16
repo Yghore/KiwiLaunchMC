@@ -1,6 +1,19 @@
 interface ManifestVanillaVersion {
 
+    
+    getAllFiles();
+
+    /**
+     * Informations of games
+     */
     gameProperties: any;
+    /**
+     * allFiles downloaded/checked used by fileDeleted;
+     */
+    allFiles : string[];
+    /**
+     * Directory of games
+     */
     dir : any;
     /**
      * Check if the files is good (CHECKSUM, FILES EXISTS, ETC... and download files) 
