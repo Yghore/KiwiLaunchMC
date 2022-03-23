@@ -10,6 +10,8 @@ export { ProcessManager } from "./ProcessManager";
 export { ProcessProfile } from "./ProcessProfile";
 export { FileDeleter } from "./Updater/FileDeleter";
 export { VanillaUpdater } from "./Updater/VanillaUpdater";
+export { ManifestForgeVersion } from "./Updater/Manifests/ManifestForgeVersion";
+export { ManifestVanillaVersion } from "./Updater/Manifests/ManifestVanillaVersion";
 export { ForgeUpdater } from "./Updater/ForgeUpdater";
 export { CustomUpdater } from "./Updater/CustomUpdater";
 export { Logger } from './Logger/Logger';
