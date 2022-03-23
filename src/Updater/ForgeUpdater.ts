@@ -8,8 +8,8 @@ import { ForgeVersion } from "../Version/ForgeVersion";
 import { exec, spawn} from "child_process"; 
 import StreamZip = require("node-stream-zip");
 import { TextColor, TextFormat } from "../Logger/FormatColor";
+import { ManifestForgeVersion } from "./Manifests/ManifestForgeVersion";
 
-const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
 export class ForgeUpdater implements ManifestForgeVersion {
 

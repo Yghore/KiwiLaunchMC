@@ -8,6 +8,7 @@ import { RecursiveFolderFile } from "../Utils/RecursiveFolderFile";
 import crc32 from 'crc/crc32';
 import { LibsInformations } from "../Utils/LibsInformations";
 import { TextColor } from "../Logger/FormatColor";
+import { ManifestVanillaVersion } from "./Manifests/ManifestVanillaVersion";
 
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 

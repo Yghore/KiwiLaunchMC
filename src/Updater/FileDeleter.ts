@@ -2,6 +2,8 @@ import path = require("path");
 import * as fs from "fs";
 import { DirectoryManager, Logger, TextColor, TextFormat } from "..";
 import { RecursiveFolderFile } from "../Utils/RecursiveFolderFile";
+import { ManifestVanillaVersion } from "./Manifests/ManifestVanillaVersion";
+import { ManifestForgeVersion } from "./Manifests/ManifestForgeVersion";
 
 export class FileDeleter {
 

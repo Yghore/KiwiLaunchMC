@@ -1,3 +1,5 @@
+import { ManifestVanillaVersion } from "./Manifests/ManifestVanillaVersion";
+
 export class CustomUpdater implements ManifestVanillaVersion
 {
     gameVersion: any;
