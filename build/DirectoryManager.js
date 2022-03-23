@@ -2,6 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DirectoryManager = void 0;
 const path = require("path");
+const FormatColor_1 = require("./Logger/FormatColor");
+const Logger_1 = require("./Logger/Logger");
 const ArrayToCommand_1 = require("./Utils/ArrayToCommand");
 const RecursiveFolderFile_1 = require("./Utils/RecursiveFolderFile");
 class DirectoryManager {
@@ -18,14 +20,20 @@ class DirectoryManager {
      * @param mainJar version.jar (or minecraft.jar)
      * @param assetsDir assets
      */
-    kLogger;
+    static DEFAULT_DIRECTORY = process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + '/Library/Preferences' : process.env.HOME + "/.local/share");
     constructor(gameDir, natives, libs, mainJar, assetsDir) {
         this.gameDir = gameDir;
         this.natives = natives;
         this.libs = libs;
         this.mainJar = mainJar;
         this.assetsDir = assetsDir;
-        this.gameDir = gameDir;
+        let msg = "\n";
+        msg += "\tGame Directory : " + FormatColor_1.TextColor.GREEN + this.gameDir + "\n" + FormatColor_1.TextFormat.RESET;
+        msg += "\tNatives : " + FormatColor_1.TextColor.GREEN + this.natives + "\n" + FormatColor_1.TextFormat.RESET;
+        msg += "\tLibraries : " + FormatColor_1.TextColor.GREEN + this.libs + "\n" + FormatColor_1.TextFormat.RESET;
+        msg += "\tAssets : " + FormatColor_1.TextColor.GREEN + this.assetsDir + "\n" + FormatColor_1.TextFormat.RESET;
+        msg += "\tMainJar : " + FormatColor_1.TextColor.GREEN + this.mainJar + "\n" + FormatColor_1.TextFormat.RESET;
+        Logger_1.Logger.getLogger().print("Launcher informations : " + msg);
     }
     getGameDirectory() {
         return this.gameDir;

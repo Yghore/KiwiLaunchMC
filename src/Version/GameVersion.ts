@@ -1,4 +1,6 @@
 import { GameTweak } from "../GameTweak";
+import { TextColor } from "../Logger/FormatColor";
+import { KLogger } from "../Logger/KLogger";
 import { Logger } from "../Logger/Logger";
 import { MinecraftVersion } from "./MinecraftVersion";
 
@@ -22,8 +24,10 @@ export class GameVersion {
      * @param versionIndex The version of games (1.12.2, 1.8.8, etc...)
      */
     constructor(public version : MinecraftVersion, public tweak : GameTweak, public versionIndex : string, public versionManifest : string) {
+        Logger.getLogger().print("Minecraft Version : " + TextColor.GREEN + versionManifest);
         if(tweak == GameTweak.FORGE)
         {   
+            
             if(version == MinecraftVersion.V1_17_HIGHER)
             {
                 this.mainClass = "cpw.mods.bootstraplauncher.BootstrapLauncher";

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BGColor = exports.TextColor = exports.TextFormat = exports.KLogger = exports.CustomUpdater = exports.ForgeUpdater = exports.VanillaUpdater = exports.FileDeleter = exports.ProcessProfile = exports.ProcessManager = exports.ParametersManager = exports.MinecraftVersion = exports.Launch = exports.JavaPath = exports.GameVersion = exports.GameTweak = exports.DirectoryManager = exports.AuthManager = void 0;
+exports.BGColor = exports.TextColor = exports.TextFormat = exports.KLogger = exports.Logger = exports.CustomUpdater = exports.ForgeUpdater = exports.VanillaUpdater = exports.FileDeleter = exports.ProcessProfile = exports.ProcessManager = exports.ParametersManager = exports.MinecraftVersion = exports.Launch = exports.JavaPath = exports.GameVersion = exports.GameTweak = exports.DirectoryManager = exports.AuthManager = void 0;
 var AuthManager_1 = require("./AuthManager");
 Object.defineProperty(exports, "AuthManager", { enumerable: true, get: function () { return AuthManager_1.AuthManager; } });
 var DirectoryManager_1 = require("./DirectoryManager");
@@ -29,6 +29,8 @@ var ForgeUpdater_1 = require("./Updater/ForgeUpdater");
 Object.defineProperty(exports, "ForgeUpdater", { enumerable: true, get: function () { return ForgeUpdater_1.ForgeUpdater; } });
 var CustomUpdater_1 = require("./Updater/CustomUpdater");
 Object.defineProperty(exports, "CustomUpdater", { enumerable: true, get: function () { return CustomUpdater_1.CustomUpdater; } });
+var Logger_1 = require("./Logger/Logger");
+Object.defineProperty(exports, "Logger", { enumerable: true, get: function () { return Logger_1.Logger; } });
 var KLogger_1 = require("./Logger/KLogger");
 Object.defineProperty(exports, "KLogger", { enumerable: true, get: function () { return KLogger_1.KLogger; } });
 var FormatColor_1 = require("./Logger/FormatColor");

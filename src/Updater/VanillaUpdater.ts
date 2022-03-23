@@ -7,6 +7,7 @@ import hasha = require('hasha');
 import { RecursiveFolderFile } from "../Utils/RecursiveFolderFile";
 import crc32 from 'crc/crc32';
 import { LibsInformations } from "../Utils/LibsInformations";
+import { TextColor } from "../Logger/FormatColor";
 
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
@@ -52,12 +53,12 @@ export class VanillaUpdater implements ManifestVanillaVersion {
     public async updateGame()
     {
         if(!fs.existsSync(this.dir.getGameDirectory())){ fs.mkdirSync(this.dir.getGameDirectory(), {recursive: true})}
-        console.log("Nombre de fichier ? : " + RecursiveFolderFile.getAllFiles(this.dir.getGameDirectory()).length);
+        Logger.getLogger().print("Vanilla File : " + TextColor.GREEN + RecursiveFolderFile.getAllFiles(this.dir.getGameDirectory()).length);
         await this.setManisfest();
         await this.downloadsLibrariesFiles();
         await this.downloadAssetsFiles();
         await this.downloadClientJarFiles();
-        console.log("Telechargé ? : " + this.totalDownloadedFiles);
+        Logger.getLogger().print("Downloaded : " + TextColor.GREEN + this.totalDownloadedFiles);
     }
 
     public getMainClass() : string
@@ -175,7 +176,7 @@ export class VanillaUpdater implements ManifestVanillaVersion {
 
             await zip.extract(entry.name, this.dir.getNativesDirectory());
 
-            console.log("Extraction : " + entry.name);
+            Logger.getLogger().print("Extraction : " + TextColor.GREEN + entry.name);
         }
         //const count = await zip.extract(null, this.dir.getNativesDirectory());
 
@@ -192,7 +193,7 @@ export class VanillaUpdater implements ManifestVanillaVersion {
             fs.mkdirSync(path.dirname(dist), {recursive: true});
             fs.writeFileSync(dist, await download(url));
             isChanged = true;
-            console.log(dist);
+            Logger.getLogger().print(TextColor.GREEN + dist);
             this.totalDownloadedFiles++;
             
         }
@@ -201,7 +202,7 @@ export class VanillaUpdater implements ManifestVanillaVersion {
             if(hasha.fromFileSync(dist, {algorithm: 'sha1'}) != hash){
                 fs.writeFileSync(dist, await download(url));
                 isChanged = true;
-                console.log(dist);
+                Logger.getLogger().print(TextColor.GREEN + dist);
                 this.totalDownloadedFiles++;
             }
 

@@ -7,6 +7,7 @@ import { LibsInformations } from "../Utils/LibsInformations";
 import { ForgeVersion } from "../Version/ForgeVersion";
 import { exec, spawn} from "child_process"; 
 import StreamZip = require("node-stream-zip");
+import { TextColor, TextFormat } from "../Logger/FormatColor";
 
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
@@ -49,7 +50,7 @@ export class ForgeUpdater implements ManifestForgeVersion {
     public async updateGame() {
         if(await this.isForgeInstalled())
         {
-            console.log("Forge déjà installé...");
+            Logger.getLogger().print("Forge installed, verification...");
             await this.setManisfest();
         }
 
@@ -68,13 +69,13 @@ export class ForgeUpdater implements ManifestForgeVersion {
     public async downloadsForgeFiles()
     {
         
-        console.log("DOWNLOAD....");
+        Logger.getLogger().print("Download forge file");
         var url : string = this.FORGE_URL + this.gameVersion.getMcVer() + "-" + this.gameVersion.getForgeVer() + "/forge-" + this.gameVersion.getMcVer() + "-" + this.gameVersion.getForgeVer() + "-installer.jar";
         var file = path.join(this.dir.getGameDirectory(), "forge-installer.jar");
         await this.checkDownloadFiles(url, "", file);
-        console.log("FILE : %s | URL : %s", file, url);
+        Logger.getLogger().print("Forge file :" + TextColor.GREEN + file + TextFormat.RESET + "| Url : " + TextColor.GREEN + url);
         spawn("java", ["-jar", file, "--extract", this.dir.getLibsDirectory()], {cwd: this.dir.gameDir});
-        console.log("EXCTRACTION du forge");
+        Logger.getLogger().print("Forge extraction");
         const zip = new StreamZip.async({ file: file});
         const entries = await zip.entries();
         for await(const entry of Object.values(entries)) 
@@ -82,7 +83,7 @@ export class ForgeUpdater implements ManifestForgeVersion {
             if(entry.isFile && entry.name == "version.json")
             {
                 await zip.extract(entry.name, this.dir.getGameDirectory());
-                console.log("Extraction : " + entry.name);
+                Logger.getLogger().print("Extraction : " + TextColor.GREEN + entry.name);
             }
           
 
@@ -138,7 +139,7 @@ export class ForgeUpdater implements ManifestForgeVersion {
                 fs.mkdirSync(path.dirname(dist), {recursive: true});
                 fs.writeFileSync(dist, await download(url));
                 isChanged = true;
-                console.log(dist);
+                Logger.getLogger().print("Extraction : " + TextColor.GREEN + dist);
                 this.totalDownloadedFiles++;
                 
             }
@@ -147,7 +148,7 @@ export class ForgeUpdater implements ManifestForgeVersion {
                 if(hash != "" && hasha.fromFileSync(dist, {algorithm: 'sha1'}) != hash){
                     fs.writeFileSync(dist, await download(url));
                     isChanged = true;
-                    console.log(dist);
+                    Logger.getLogger().print("Extraction : " + TextColor.GREEN + dist);
                     this.totalDownloadedFiles++;
                 }
 

@@ -16,7 +16,7 @@ export class ProcessManager {
     {
         if(this.profile === ProcessProfile.EXTERNAL)
         {
-            console.log("Lancement du jeu en EXTERNAL Profile");
+            Logger.getLogger().print("Launch profile : External");
             this.process = exec(this.launch.getLaunchExternalProfile(), {cwd: this.launch.directoryManager.gameDir}, (error, data, getter) => {
 				if(error){
 					throw new Error(`Error in start : ${error.message}`);
@@ -27,7 +27,7 @@ export class ProcessManager {
         }
         else
         {
-            console.log("Lancement du jeu en INTERNAL Profile");
+            Logger.getLogger().print("Launch profile: Internal");
             var commandInternal : string[] = this.launch.getLaunchInternalProfile();
 			var javaCommand : string = commandInternal.splice(0, 1)[0];
 			this.process = spawn(javaCommand, commandInternal, {cwd: this.launch.directoryManager.gameDir});

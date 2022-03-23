@@ -1,4 +1,3 @@
-import { Logger } from "./Logger/Logger";
 export declare class DirectoryManager {
     gameDir: string;
     natives: string;
@@ -13,7 +12,7 @@ export declare class DirectoryManager {
      * @param mainJar version.jar (or minecraft.jar)
      * @param assetsDir assets
      */
-    kLogger?: undefined | Logger;
+    static readonly DEFAULT_DIRECTORY: string;
     constructor(gameDir: string, natives: string, libs: string, mainJar: string, assetsDir: string);
     getGameDirectory(): string;
     /**

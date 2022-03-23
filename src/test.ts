@@ -15,12 +15,16 @@ import { ForgeVersion } from "./Version/ForgeVersion";
 import { KLogger } from "./Logger/KLogger";
 import path = require("path");
 import { TextColor, TextFormat, BGColor} from "./Logger/FormatColor";
+import { Logger } from "./Logger/Logger";
 
 (async function(){
 
-    var kLogger = new KLogger(path.join(__dirname, "launcher_logs.log"), "[LauncherTest]");
 
-    var dir = new DirectoryManager("C:/Users/yhgor/AppData/Roaming/.LauncherTest", "natives", "libraries", "minecraft.jar", "assets");
+
+    const kLogger = new KLogger(path.join(__dirname, "launcher_logs.log"), "[LauncherTest]");
+    Logger.setLogger(kLogger);
+
+    var dir = new DirectoryManager(path.join(DirectoryManager.DEFAULT_DIRECTORY, ".LauncherTest"), "natives", "libraries", "minecraft.jar", "assets");
     var ver = new GameVersion(MinecraftVersion.V1_8_HIGHER, GameTweak.VANILLA, "1.12", "1.12.2");
     var vanillaUpdater = new VanillaUpdater(ver, dir);
     var forgeUpdater = new ForgeUpdater(new ForgeVersion(ver.versionManifest, "14.23.5.2860"), dir);
@@ -29,10 +33,9 @@ import { TextColor, TextFormat, BGColor} from "./Logger/FormatColor";
     var java = new JavaPath("java"); // Use java or directory (bin/java is add into class)
     var auth = new AuthManager("Player2042", "sry", "nope");
     var globalLaunch = new Launch(java, parameters, dir, ver, auth);
-    var process = new ProcessManager(globalLaunch, ProcessProfile.INTERNAL);
+    var processManager = new ProcessManager(globalLaunch, ProcessProfile.INTERNAL);
     
     
-    await vanillaUpdater.setManisfest();
     await vanillaUpdater.updateGame();
 
     //await forgeUpdater.updateGame();
@@ -40,21 +43,20 @@ import { TextColor, TextFormat, BGColor} from "./Logger/FormatColor";
     //dir.setLibs(vanillaUpdater.libsLoad);
 
     let badFiles = deleter.start();
-    kLogger.print("File deleter : " + TextColor.RED + badFiles.length + TextFormat.RESET);
+
     
-    
 
-    let launch = await process.Launch();
+    let launch = await processManager.Launch();
 
 
-    kLogger.print("Launch commande : " + TextColor.GREEN + globalLaunch.getLaunchExternalProfile());
+    Logger.getLogger().print("Launch commande : " + TextColor.GREEN + globalLaunch.getLaunchExternalProfile());
 
     launch.stdout.on('data', function (data: { toString: () => any; }) {
-        kLogger.print(data.toString())
+        Logger.getLogger().print(data.toString())
     });
 
     launch.stderr.on('error', function (error: { toString: () => string; }) {
-        kLogger.print(TextColor.RED + error.toString())
+        Logger.getLogger().print(TextColor.RED + error.toString())
     });
 
 

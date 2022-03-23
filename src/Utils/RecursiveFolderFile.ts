@@ -3,7 +3,7 @@ import * as fs from "fs";
 
 export class RecursiveFolderFile
 {
-    static getAllFiles = function(dirPath : string, arrayOfFiles : string[] = [], typeFile? : undefined|string, excludes?: undefined|string[]) {
+    static getAllFiles(dirPath : string, arrayOfFiles : string[] = [], typeFile? : undefined|string, excludes?: undefined|string[]) {
         var files = fs.readdirSync(dirPath)
       
         arrayOfFiles = arrayOfFiles || []
@@ -12,7 +12,7 @@ export class RecursiveFolderFile
           if(excludes == undefined)
           {
             if (fs.statSync(path.join(dirPath, file)).isDirectory()) {
-              arrayOfFiles = RecursiveFolderFile.getAllFiles(dirPath + "/" + file, arrayOfFiles)
+              arrayOfFiles = RecursiveFolderFile.getAllFiles(dirPath + "/" + file, arrayOfFiles, typeFile)
             } else if(fs.statSync(path.join(dirPath, file)).isFile()) {
               const pathFile = path.join(dirPath, file);
               if(typeFile == undefined)
@@ -30,10 +30,11 @@ export class RecursiveFolderFile
               
             }
           }
+
           else if(!excludes.includes(path.join(dirPath, file))) 
           {
             if (fs.statSync(path.join(dirPath, file)).isDirectory()) {
-              arrayOfFiles = RecursiveFolderFile.getAllFiles(dirPath + "/" + file, arrayOfFiles)
+              arrayOfFiles = RecursiveFolderFile.getAllFiles(dirPath + "/" + file, arrayOfFiles, typeFile, excludes)
             } else if(fs.statSync(path.join(dirPath, file)).isFile()) {
               const pathFile = path.join(dirPath, file);
               if(typeFile == undefined)

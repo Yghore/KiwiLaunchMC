@@ -1,4 +1,6 @@
 import * as path from "path";
+import { TextColor } from "./Logger/FormatColor";
+import { Logger } from "./Logger/Logger";
 
 export class JavaPath {
 
@@ -10,11 +12,12 @@ export class JavaPath {
     {
         if(javaPath === "default" || javaPath === "java")
         {
+            Logger.getLogger().print("Default java path");
             this.javaPath = "java";
         }
         else
-        {
-
+        {   
+            Logger.getLogger().print("Custom java path: " + TextColor.GREEN + path.join(this.javaPath, 'bin/java'));
             this.javaPath = path.join(this.javaPath, 'bin/java');
             
         }

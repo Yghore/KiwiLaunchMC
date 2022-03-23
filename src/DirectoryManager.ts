@@ -1,7 +1,10 @@
 import * as path from "path";
+import { TextColor, TextFormat } from "./Logger/FormatColor";
+import { KLogger } from "./Logger/KLogger";
 import { Logger } from "./Logger/Logger";
 import { ArrayToCommand } from './Utils/ArrayToCommand';
 import { RecursiveFolderFile } from './Utils/RecursiveFolderFile';
+
 
 
 export class DirectoryManager {
@@ -14,7 +17,9 @@ export class DirectoryManager {
      * @param assetsDir assets 
      */
 
-    public kLogger? : undefined|Logger;
+    public static readonly DEFAULT_DIRECTORY = process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + '/Library/Preferences' : process.env.HOME + "/.local/share");
+
+
 
     constructor(
         public gameDir : string,
@@ -22,8 +27,15 @@ export class DirectoryManager {
         public libs : string,
         public mainJar : string,
         public assetsDir : string,
-        ) {
-            this.gameDir = gameDir;
+        ) 
+        {
+            let msg : string = "\n";
+            msg += "\tGame Directory : " + TextColor.GREEN + this.gameDir + "\n" + TextFormat.RESET;
+            msg += "\tNatives : " + TextColor.GREEN + this.natives + "\n" + TextFormat.RESET;
+            msg += "\tLibraries : " + TextColor.GREEN + this.libs + "\n" + TextFormat.RESET;
+            msg += "\tAssets : " + TextColor.GREEN + this.assetsDir + "\n" + TextFormat.RESET;
+            msg += "\tMainJar : " + TextColor.GREEN + this.mainJar + "\n" + TextFormat.RESET;
+            Logger.getLogger().print("Launcher informations : " + msg);   
         }
 
 
