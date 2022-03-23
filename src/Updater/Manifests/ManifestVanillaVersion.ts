@@ -1,4 +1,4 @@
-interface ManifestVanillaVersion {
+export interface ManifestVanillaVersion {
 
     
     getAllFiles();

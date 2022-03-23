@@ -1,4 +1,6 @@
-interface ManifestForgeVersion extends ManifestVanillaVersion 
+import { ManifestVanillaVersion } from "./ManifestVanillaVersion";
+
+export interface ManifestForgeVersion extends ManifestVanillaVersion 
 {
     forgeProperties: any;
     /**
