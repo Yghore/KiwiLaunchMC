@@ -12,13 +12,18 @@ import { FileDeleter } from "./Updater/FileDeleter";
 import { VanillaUpdater } from "./Updater/VanillaUpdater";
 import { ForgeUpdater } from "./Updater/ForgeUpdater";
 import { ForgeVersion } from "./Version/ForgeVersion";
+import { KLogger } from "./Logger/KLogger";
+import path = require("path");
+import { TextColor, TextFormat, BGColor} from "./Logger/FormatColor";
 
 (async function(){
 
+    var kLogger = new KLogger(path.join(__dirname, "launcher_logs.log"), "[LauncherTest]");
+
     var dir = new DirectoryManager("C:/Users/yhgor/AppData/Roaming/.LauncherTest", "natives", "libraries", "minecraft.jar", "assets");
-    var ver = new GameVersion(MinecraftVersion.V1_17_HIGHER, GameTweak.VANILLA, "1.18", "1.18.2");
+    var ver = new GameVersion(MinecraftVersion.V1_8_HIGHER, GameTweak.VANILLA, "1.12", "1.12.2");
     var vanillaUpdater = new VanillaUpdater(ver, dir);
-    var forgeUpdater = new ForgeUpdater(new ForgeVersion(ver.versionManisfest, "40.0.12"), dir);
+    var forgeUpdater = new ForgeUpdater(new ForgeVersion(ver.versionManifest, "14.23.5.2860"), dir);
     var deleter = new FileDeleter(dir, [], vanillaUpdater, forgeUpdater);
     var parameters = new ParametersManager(1024, 1024 , "M");
     var java = new JavaPath("java"); // Use java or directory (bin/java is add into class)
@@ -30,25 +35,27 @@ import { ForgeVersion } from "./Version/ForgeVersion";
     await vanillaUpdater.setManisfest();
     await vanillaUpdater.updateGame();
 
-    await forgeUpdater.updateGame();
+    //await forgeUpdater.updateGame();
 
     //dir.setLibs(vanillaUpdater.libsLoad);
 
-    console.log("Bad file : " + deleter.start());
+    let badFiles = deleter.start();
+    kLogger.print("File deleter : " + TextColor.RED + badFiles.length + TextFormat.RESET);
+    
+    
 
-    // let launch = await process.Launch();
+    let launch = await process.Launch();
 
 
-    // console.log(globalLaunch.getLaunchExternalProfile());
-    // console.log("Lancement du jeu !");
+    kLogger.print("Launch commande : " + TextColor.GREEN + globalLaunch.getLaunchExternalProfile());
 
-    // launch.stdout.on('data', function (data: { toString: () => any; }) {
-    //     console.log(data.toString());
-    // });
+    launch.stdout.on('data', function (data: { toString: () => any; }) {
+        kLogger.print(data.toString())
+    });
 
-    // launch.stderr.on('data', function (data: { toString: () => string; }) {
-    //     console.log('ERROR :' + data.toString());
-    // });
+    launch.stderr.on('error', function (error: { toString: () => string; }) {
+        kLogger.print(TextColor.RED + error.toString())
+    });
 
 
     

@@ -3,6 +3,8 @@ interface ManifestVanillaVersion {
     
     getAllFiles();
 
+    gameVersion: any;
+
     /**
      * Informations of games
      */

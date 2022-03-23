@@ -12,3 +12,6 @@ export { FileDeleter } from "./Updater/FileDeleter";
 export { VanillaUpdater } from "./Updater/VanillaUpdater";
 export { ForgeUpdater } from "./Updater/ForgeUpdater";
 export { CustomUpdater } from "./Updater/CustomUpdater";
+export { Logger } from './Logger/Logger';
+export { KLogger } from './Logger/KLogger';
+export { TextFormat, TextColor, BGColor } from './Logger/FormatColor';

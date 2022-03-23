@@ -18,6 +18,7 @@ class DirectoryManager {
      * @param mainJar version.jar (or minecraft.jar)
      * @param assetsDir assets
      */
+    kLogger;
     constructor(gameDir, natives, libs, mainJar, assetsDir) {
         this.gameDir = gameDir;
         this.natives = natives;

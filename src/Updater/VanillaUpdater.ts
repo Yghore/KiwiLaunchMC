@@ -1,5 +1,5 @@
 import * as path from "path";
-import { DirectoryManager, GameVersion } from '..';
+import { DirectoryManager, GameVersion, Logger } from '..';
 import * as fs from "fs";
 import download = require('download');
 import StreamZip = require('node-stream-zip');
@@ -25,6 +25,7 @@ export class VanillaUpdater implements ManifestVanillaVersion {
     public libsLoad : Array<string> = [];
 
 
+
     constructor(public gameVersion : GameVersion, public dir : DirectoryManager) {}
 
     
@@ -41,7 +42,7 @@ export class VanillaUpdater implements ManifestVanillaVersion {
         let settings = { method: "get" };
         const resJson = await fetch(this.MANIFEST_URL, settings).then(res => res.json())
         this.gameProperties = await Promise.all(resJson.versions
-            .filter(version => version.id === this.gameVersion.versionManisfest)
+            .filter(version => version.id === this.gameVersion.versionManifest)
             .map(ver => fetch(ver.url, settings).then(res => res.json())));
             
         this.assetIndex = await fetch(this.gameProperties[0].assetIndex.url, settings).then(res => res.json())

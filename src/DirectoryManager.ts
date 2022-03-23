@@ -1,4 +1,5 @@
 import * as path from "path";
+import { Logger } from "./Logger/Logger";
 import { ArrayToCommand } from './Utils/ArrayToCommand';
 import { RecursiveFolderFile } from './Utils/RecursiveFolderFile';
 
@@ -12,12 +13,15 @@ export class DirectoryManager {
      * @param mainJar version.jar (or minecraft.jar)
      * @param assetsDir assets 
      */
+
+    public kLogger? : undefined|Logger;
+
     constructor(
         public gameDir : string,
         public natives : string,
         public libs : string,
         public mainJar : string,
-        public assetsDir : string
+        public assetsDir : string,
         ) {
             this.gameDir = gameDir;
         }

@@ -1,12 +1,14 @@
 import { Launch } from "./Launch";
 import { ProcessProfile } from "./ProcessProfile";
 import { exec, spawn} from "child_process"; 
+import { Logger } from "./Logger/Logger";
 
 
 
 export class ProcessManager {
 
     private process;
+
     constructor(public launch : Launch, public profile : ProcessProfile) 
     {}
 

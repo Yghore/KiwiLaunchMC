@@ -1,4 +1,4 @@
-import { DirectoryManager, GameVersion } from "..";
+import { DirectoryManager, GameVersion, Logger } from "..";
 import * as fs from "fs";
 import download = require("download");
 import path = require("path");
@@ -22,13 +22,22 @@ export class ForgeUpdater implements ManifestForgeVersion {
 
     allFiles: string[] = [];
 
+
+
+
     constructor(public gameVersion : ForgeVersion, public dir : DirectoryManager) {}
 
 
     public async setManisfest(): Promise<any> {
         this.gameProperties = [];
-        let settings = { method: "get" };
-        this.forgeProperties = await fetch(this.FORGE_URL, settings).then(res => res.json())
+        let fileProperties = path.join(this.dir.getGameDirectory(), 'version.json');
+        if(!fs.existsSync(fileProperties))
+        {
+            throw new Error("Updater Error : Version not found !");
+            
+        }
+        this.forgeProperties = require(fileProperties);
+
     }
 
     public async isForgeInstalled() : Promise<boolean>
@@ -41,7 +50,7 @@ export class ForgeUpdater implements ManifestForgeVersion {
         if(await this.isForgeInstalled())
         {
             console.log("Forge déjà installé...");
-            return;
+            await this.setManisfest();
         }
 
         await this.downloadsForgeFiles();
@@ -83,8 +92,8 @@ export class ForgeUpdater implements ManifestForgeVersion {
 
         await zip.close();
 
-        this.forgeProperties = require(path.join(this.dir.getGameDirectory(), 'version.json'));
 
+        this.setManisfest();
     }
 
     public async downloadsLibrariesFiles()
@@ -121,26 +130,29 @@ export class ForgeUpdater implements ManifestForgeVersion {
     {
         this.allFiles.push(dist);
         var isChanged : boolean = false;
-        if(!fs.existsSync(dist))
+        if(!await this.isForgeInstalled())
         {
-            fs.mkdirSync(path.dirname(dist), {recursive: true});
-            fs.writeFileSync(dist, await download(url));
-            isChanged = true;
-            console.log(dist);
-            this.totalDownloadedFiles++;
-            
-        }
-        else
-        {
-            if(hash != "" && hasha.fromFileSync(dist, {algorithm: 'sha1'}) != hash){
+
+            if(!fs.existsSync(dist))
+            {
+                fs.mkdirSync(path.dirname(dist), {recursive: true});
                 fs.writeFileSync(dist, await download(url));
                 isChanged = true;
                 console.log(dist);
                 this.totalDownloadedFiles++;
+                
             }
+            else
+            {
+                if(hash != "" && hasha.fromFileSync(dist, {algorithm: 'sha1'}) != hash){
+                    fs.writeFileSync(dist, await download(url));
+                    isChanged = true;
+                    console.log(dist);
+                    this.totalDownloadedFiles++;
+                }
 
+            }
         }
-    
         return isChanged;
     }
 

@@ -4,10 +4,13 @@ import { GameVersion } from './Version/GameVersion';
 import { ParametersManager } from './ParametersManager';
 import { AuthManager } from './AuthManager';
 import { ArrayToCommand } from './Utils/ArrayToCommand';
+import { Logger } from './Logger/Logger';
 
 
 export class Launch {
   
+
+
     /**
      * Main Class for create a Version of Minecraft
      * @param javaPath 

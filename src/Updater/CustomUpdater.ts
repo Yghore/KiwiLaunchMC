@@ -1,5 +1,6 @@
 export class CustomUpdater implements ManifestVanillaVersion
 {
+    gameVersion: any;
     getAllFiles() {
         throw new Error("Method not implemented.");
     }
