@@ -25,18 +25,18 @@ const KLaunch = require('@kiwigdc/kiwilaunch')
 
 
 
-    const kLogger = new KLogger(path.join(__dirname, "launcher_logs.log"), "[LauncherTest]");
-    Logger.setLogger(kLogger);
+    const kLogger = new KLaunch.KLogger(path.join(__dirname, "launcher_logs.log"), "[LauncherTest]");
+    KLaunch.Logger.setLogger(kLogger);
 
-    var dir = new DirectoryManager(path.join(DirectoryManager.DEFAULT_DIRECTORY, ".LauncherTest"), "natives", "libraries", "minecraft.jar", "assets");
-    var ver = new GameVersion(MinecraftVersion.V1_8_HIGHER, GameTweak.VANILLA, "1.12", "1.12.2");
-    var vanillaUpdater = new VanillaUpdater(ver, dir);
-    var deleter = new FileDeleter(dir, [], vanillaUpdater);
-    var parameters = new ParametersManager(1024, 1024 , "M");
-    var java = new JavaPath("java"); // Use java or directory (bin/java is add into class)
-    var auth = new AuthManager("Player2042", "sry", "nope");
-    var globalLaunch = new Launch(java, parameters, dir, ver, auth);
-    var processManager = new ProcessManager(globalLaunch, ProcessProfile.INTERNAL);
+    var dir = new KLaunch.DirectoryManager(path.join(DirectoryManager.DEFAULT_DIRECTORY, ".LauncherTest"), "natives", "libraries", "minecraft.jar", "assets");
+    var ver = new KLaunch.GameVersion(MinecraftVersion.V1_8_HIGHER, GameTweak.VANILLA, "1.12", "1.12.2");
+    var vanillaUpdater = new KLaunch.VanillaUpdater(ver, dir);
+    var deleter = new KLaunch.FileDeleter(dir, [], vanillaUpdater);
+    var parameters = new KLaunch.ParametersManager(1024, 1024 , "M");
+    var java = new KLaunch.JavaPath("java"); // Use java or directory (bin/java is add into class)
+    var auth = new KLaunch.AuthManager("Player2042", "sry", "nope");
+    var globalLaunch = new KLaunch.Launch(java, parameters, dir, ver, auth);
+    var processManager = new KLaunch.ProcessManager(globalLaunch, ProcessProfile.INTERNAL);
     
     // Update game
     await vanillaUpdater.updateGame();
@@ -74,8 +74,8 @@ const KLaunch = require('@kiwigdc/kiwilaunch')
 const KLaunch = require('@kiwigdc/kiwilaunch')
 
 // Default logger :
-const kLogger = new KLogger(path.join(__dirname, "launcher_logs.log"), "[LauncherTest]");
-Logger.setLogger(kLogger);
+const kLogger = new KLaunch.KLogger(path.join(__dirname, "launcher_logs.log"), "[LauncherTest]");
+KLaunch.Logger.setLogger(kLogger);
 
 var dir = new KLaunch.DirectoryManager(path.join(DirectoryManager.DEFAULT_DIRECTORY, ".LauncherTest"), "natives", "libs", "minecraft.jar", "assets");
 var ver = new KLaunch.GameVersion(MinecraftVersion.V1_8_HIGHER, GameTweak.VANILLA, "1.12", "1.12.2");
