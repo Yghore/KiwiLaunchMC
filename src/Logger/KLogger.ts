@@ -1,4 +1,4 @@
-import fs = require('fs');
+import * as fs from 'fs';
 import { Logger } from "./Logger";
 import { TextFormat } from './FormatColor';
 

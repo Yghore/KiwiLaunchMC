@@ -1,6 +1,3 @@
-import path = require("path");
-import { KLogger } from "./KLogger";
-
 export abstract class Logger 
 {
     /**

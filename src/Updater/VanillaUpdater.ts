@@ -1,9 +1,9 @@
 import * as path from "path";
 import { DirectoryManager, GameVersion, Logger } from '..';
 import * as fs from "fs";
-import download = require('download');
-import StreamZip = require('node-stream-zip');
-import hasha = require("hasha");
+import * as download from "download";
+import * as hasha from "hasha";
+import * as StreamZip from "node-stream-zip";
 import { RecursiveFolderFile } from "../Utils/RecursiveFolderFile";
 import crc32 from "crc/crc32";
 import { LibsInformations } from "../Utils/LibsInformations";

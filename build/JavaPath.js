@@ -5,7 +5,6 @@ const path = require("path");
 const FormatColor_1 = require("./Logger/FormatColor");
 const Logger_1 = require("./Logger/Logger");
 class JavaPath {
-    javaPath;
     /**
      * Create the path of java (Path variable works)
      * @param javaPath - java or directory ('/bin/java' is add in class)

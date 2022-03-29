@@ -2,12 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ParametersManager = void 0;
 class ParametersManager {
-    minRam;
-    maxRam;
-    size;
-    extra;
-    minRamParam;
-    maxRamParam;
     /**
      *
      * @param minRam    (MIN = 1024)

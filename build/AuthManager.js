@@ -2,9 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthManager = void 0;
 class AuthManager {
-    username;
-    accessToken;
-    uuid;
     /**
      * Create User object with parameters
      * @param username - The username of player

@@ -1,12 +1,12 @@
 import { DirectoryManager, GameVersion, Logger } from "..";
 import * as fs from "fs";
-import download = require("download");
-import path = require("path");
-import hasha = require("hasha");
+import * as download from "download";
+import * as path from "path";
+import * as hasha from "hasha";
+import * as StreamZip from "node-stream-zip";
 import { LibsInformations } from "../Utils/LibsInformations";
 import { ForgeVersion } from "../Version/ForgeVersion";
 import { exec, spawn} from "child_process"; 
-import StreamZip = require("node-stream-zip");
 import { TextColor, TextFormat } from "../Logger/FormatColor";
 import { ManifestForgeVersion } from "./Manifests/ManifestForgeVersion";
 

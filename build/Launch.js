@@ -3,11 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Launch = void 0;
 const ArrayToCommand_1 = require("./Utils/ArrayToCommand");
 class Launch {
-    javaPath;
-    parametersManager;
-    directoryManager;
-    gameVersion;
-    authManager;
     /**
      * Main Class for create a Version of Minecraft
      * @param javaPath

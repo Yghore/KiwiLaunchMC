@@ -13,7 +13,7 @@ import { VanillaUpdater } from "./Updater/VanillaUpdater";
 import { ForgeUpdater } from "./Updater/ForgeUpdater";
 import { ForgeVersion } from "./Version/ForgeVersion";
 import { KLogger } from "./Logger/KLogger";
-import path = require("path");
+import * as path from "path";
 import { TextColor, TextFormat, BGColor} from "./Logger/FormatColor";
 import { Logger } from "./Logger/Logger";
 

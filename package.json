@@ -2,7 +2,7 @@
   "name": "@kiwigdc/kiwilaunch",
   "version": "2.2.4-0",
   "description": "Launch minecraft client",
-  "main": "build/test.js",
+  "main": "build/index.js",
   "types": "build/index.d.ts",
   "scripts": {
     "test": "node build/test.js"

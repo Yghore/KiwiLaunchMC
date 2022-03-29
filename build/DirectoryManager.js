@@ -7,20 +7,6 @@ const Logger_1 = require("./Logger/Logger");
 const ArrayToCommand_1 = require("./Utils/ArrayToCommand");
 const RecursiveFolderFile_1 = require("./Utils/RecursiveFolderFile");
 class DirectoryManager {
-    gameDir;
-    natives;
-    libs;
-    mainJar;
-    assetsDir;
-    /**
-     *
-     * @param gameDir The gamedirectory (The other param based of gameDir exemple for natives : gamedir + "/natives" ^^)
-     * @param natives natives of the games...
-     * @param libs libs,
-     * @param mainJar version.jar (or minecraft.jar)
-     * @param assetsDir assets
-     */
-    static DEFAULT_DIRECTORY = process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + '/Library/Preferences' : process.env.HOME + "/.local/share");
     constructor(gameDir, natives, libs, mainJar, assetsDir) {
         this.gameDir = gameDir;
         this.natives = natives;
@@ -102,6 +88,15 @@ class DirectoryManager {
     }
 }
 exports.DirectoryManager = DirectoryManager;
+/**
+ *
+ * @param gameDir The gamedirectory (The other param based of gameDir exemple for natives : gamedir + "/natives" ^^)
+ * @param natives natives of the games...
+ * @param libs libs,
+ * @param mainJar version.jar (or minecraft.jar)
+ * @param assetsDir assets
+ */
+DirectoryManager.DEFAULT_DIRECTORY = process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + '/Library/Preferences' : process.env.HOME + "/.local/share");
 // natives
 // libs
 // minecraft.jar
