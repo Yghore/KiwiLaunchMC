@@ -16,27 +16,26 @@ Discord support : https://discord.gg/WsyYnWSmwE
 
 ```ts
 
-const KLaunch = require('@kiwigdc/kiwilaunch')
 
-
+import { Launch, KLogger, Logger, DirectoryManager, GameVersion, MinecraftVersion, GameTweak, VanillaUpdater, FileDeleter, ParametersManager, JavaPath, AuthManager, ProcessManager, ProcessProfile, TextColor } from '@kiwigdc/kiwilaunch';
+import * as path from "path";
 
 
 (async function(){
 
 
+    const kLogger = new KLogger(path.join(__dirname, "launcher_logs.log"), "[LauncherTest]");
+    Logger.setLogger(kLogger);
 
-    const kLogger = new KLaunch.KLogger(path.join(__dirname, "launcher_logs.log"), "[LauncherTest]");
-    KLaunch.Logger.setLogger(kLogger);
-
-    var dir = new KLaunch.DirectoryManager(path.join(DirectoryManager.DEFAULT_DIRECTORY, ".LauncherTest"), "natives", "libraries", "minecraft.jar", "assets");
-    var ver = new KLaunch.GameVersion(MinecraftVersion.V1_8_HIGHER, GameTweak.VANILLA, "1.12", "1.12.2");
-    var vanillaUpdater = new KLaunch.VanillaUpdater(ver, dir);
-    var deleter = new KLaunch.FileDeleter(dir, [], vanillaUpdater);
-    var parameters = new KLaunch.ParametersManager(1024, 1024 , "M");
-    var java = new KLaunch.JavaPath("java"); // Use java or directory (bin/java is add into class)
-    var auth = new KLaunch.AuthManager("Player2042", "sry", "nope");
-    var globalLaunch = new KLaunch.Launch(java, parameters, dir, ver, auth);
-    var processManager = new KLaunch.ProcessManager(globalLaunch, ProcessProfile.INTERNAL);
+    var dir = new DirectoryManager(path.join(DirectoryManager.DEFAULT_DIRECTORY, ".LauncherTest"), "natives", "libraries", "minecraft.jar", "assets");
+    var ver = new GameVersion(MinecraftVersion.V1_8_HIGHER, GameTweak.VANILLA, "1.18", "1.18.2");
+    var vanillaUpdater = new VanillaUpdater(ver, dir);
+    var deleter = new FileDeleter(dir, [], vanillaUpdater);
+    var parameters = new ParametersManager(1024, 1024 , "M");
+    var java = new JavaPath("java"); // Use java or directory (bin/java is add into class)
+    var auth = new AuthManager("Player2042", "sry", "nope");
+    var globalLaunch = new Launch(java, parameters, dir, ver, auth);
+    var processManager = new ProcessManager(globalLaunch, ProcessProfile.INTERNAL);
     
     // Update game
     await vanillaUpdater.updateGame();
@@ -46,7 +45,6 @@ const KLaunch = require('@kiwigdc/kiwilaunch')
 
     // Launch command for start the game
     let launch = await processManager.Launch();
-
 
     Logger.getLogger().print("Launch command : " + TextColor.GREEN + globalLaunch.getLaunchExternalProfile());
 
@@ -71,35 +69,53 @@ const KLaunch = require('@kiwigdc/kiwilaunch')
 
 ```ts
 
-const KLaunch = require('@kiwigdc/kiwilaunch')
 
-// Default logger :
-const kLogger = new KLaunch.KLogger(path.join(__dirname, "launcher_logs.log"), "[LauncherTest]");
-KLaunch.Logger.setLogger(kLogger);
-
-var dir = new KLaunch.DirectoryManager(path.join(DirectoryManager.DEFAULT_DIRECTORY, ".LauncherTest"), "natives", "libs", "minecraft.jar", "assets");
-var ver = new KLaunch.GameVersion(MinecraftVersion.V1_8_HIGHER, GameTweak.VANILLA, "1.12", "1.12.2");
+import { Launch, KLogger, Logger, DirectoryManager, GameVersion, MinecraftVersion, GameTweak, VanillaUpdater, FileDeleter, ParametersManager, JavaPath, AuthManager, ProcessManager, ProcessProfile, TextColor } from '@kiwigdc/kiwilaunch';
+import * as path from "path";
 
 
-var parameters = new KLaunch.ParametersManager(1024, 2048 , "M");
-var java = new KLaunch.JavaPath("java"); // Use java or directory (bin/java is add into class)
-var auth = new KLaunch.AuthManager("Player2042", "sry", "nope");
-var globalLaunch = new KLaunch.Launch(java, parameters, dir, ver, auth);
-var process = new KLaunch.ProcessManager(globalLaunch, ProcessProfile.INTERNAL);
-
-let launch = await processManager.Launch();
+(async function(){
 
 
-Logger.getLogger().print("Launch commande : " + TextColor.GREEN + globalLaunch.getLaunchExternalProfile());
 
-launch.stdout.on('data', function (data: { toString: () => any; }) {
-    Logger.getLogger().print(data.toString())
-});
+    const kLogger = new KLogger(path.join(__dirname, "launcher_logs.log"), "[LauncherTest]");
+    Logger.setLogger(kLogger);
 
-launch.stderr.on('error', function (error: { toString: () => string; }) {
-    Logger.getLogger().print(TextColor.RED + error.toString())
-});
+    var dir = new DirectoryManager(path.join(DirectoryManager.DEFAULT_DIRECTORY, ".LauncherTest"), "natives", "libraries", "minecraft.jar", "assets");
+    var ver = new GameVersion(MinecraftVersion.V1_8_HIGHER, GameTweak.VANILLA, "1.18", "1.18.2");
+    var vanillaUpdater = new VanillaUpdater(ver, dir);
+    var deleter = new FileDeleter(dir, [], vanillaUpdater);
+    var parameters = new ParametersManager(1024, 1024 , "M");
+    var java = new JavaPath("java"); // Use java or directory (bin/java is add into class)
+    var auth = new AuthManager("Player2042", "sry", "nope");
+    var globalLaunch = new Launch(java, parameters, dir, ver, auth);
+    var processManager = new ProcessManager(globalLaunch, ProcessProfile.INTERNAL);
+    
+    // Update game
+    await vanillaUpdater.updateGame();
 
+    // Deleter (that does not come from UPDATER and FORGE UPDATER, if forge updater is set.. )
+    let badFiles = deleter.start();
+
+    // Launch command for start the game
+    let launch = await processManager.Launch();
+
+    Logger.getLogger().print("Launch command : " + TextColor.GREEN + globalLaunch.getLaunchExternalProfile());
+
+    launch.stdout.on('data', function (data: { toString: () => any; }) {
+        Logger.getLogger().print(data.toString())
+    });
+
+    launch.stderr.on('error', function (error: { toString: () => string; }) {
+        Logger.getLogger().print(TextColor.RED + error.toString())
+    });
+
+
+    
+
+
+
+})();
 
 
 
