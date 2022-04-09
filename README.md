@@ -30,6 +30,8 @@ import * as path from "path";
     var dir = new DirectoryManager(path.join(DirectoryManager.DEFAULT_DIRECTORY, ".LauncherTest"), "natives", "libraries", "minecraft.jar", "assets");
     var ver = new GameVersion(MinecraftVersion.V1_8_HIGHER, GameTweak.VANILLA, "1.18", "1.18.2");
     var vanillaUpdater = new VanillaUpdater(ver, dir);
+    //var forgeUpdater = new ForgeUpdater(new ForgeVersion(ver.versionManifest, "14.23.5.2860"), dir); 
+    //var deleter = new FileDeleter(dir, [], vanillaUpdater, forgeUpdater);
     var deleter = new FileDeleter(dir, [], vanillaUpdater);
     var parameters = new ParametersManager(1024, 1024 , "M");
     var java = new JavaPath("java"); // Use java or directory (bin/java is add into class)
@@ -39,6 +41,14 @@ import * as path from "path";
     
     // Update game
     await vanillaUpdater.updateGame();
+
+    
+    // await forgeUpdater.addModWithUrl("https://xxxx.xxxxxx.fr/mods.json");
+    // await forgeUpdater.addMod(new Mod("https://micdoodle8.com/new-builds/GC-1.12/280/MicdoodleCore-1.12.2-4.0.2.280.jar", "906B6088C54A428D7A383796E7B77283CCA7E573"));
+
+
+    // await forgeUpdater.updateGame();
+
 
     // Deleter (that does not come from UPDATER and FORGE UPDATER, if forge updater is set.. )
     let badFiles = deleter.start();
@@ -83,19 +93,13 @@ import * as path from "path";
 
     var dir = new DirectoryManager(path.join(DirectoryManager.DEFAULT_DIRECTORY, ".LauncherTest"), "natives", "libraries", "minecraft.jar", "assets");
     var ver = new GameVersion(MinecraftVersion.V1_8_HIGHER, GameTweak.VANILLA, "1.18", "1.18.2");
-    var vanillaUpdater = new VanillaUpdater(ver, dir);
-    var deleter = new FileDeleter(dir, [], vanillaUpdater);
     var parameters = new ParametersManager(1024, 1024 , "M");
     var java = new JavaPath("java"); // Use java or directory (bin/java is add into class)
     var auth = new AuthManager("Player2042", "sry", "nope");
     var globalLaunch = new Launch(java, parameters, dir, ver, auth);
     var processManager = new ProcessManager(globalLaunch, ProcessProfile.INTERNAL);
     
-    // Update game
-    await vanillaUpdater.updateGame();
 
-    // Deleter (that does not come from UPDATER and FORGE UPDATER, if forge updater is set.. )
-    let badFiles = deleter.start();
 
     // Launch command for start the game
     let launch = await processManager.Launch();
