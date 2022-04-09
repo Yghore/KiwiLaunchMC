@@ -9,6 +9,9 @@ import { ForgeVersion } from "../Version/ForgeVersion";
 import { exec, spawn} from "child_process"; 
 import { TextColor, TextFormat } from "../Logger/FormatColor";
 import { ManifestForgeVersion } from "./Manifests/ManifestForgeVersion";
+import { Mod } from "./Manifests/Mod";
+
+const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
 
 export class ForgeUpdater implements ManifestForgeVersion {
@@ -23,11 +26,35 @@ export class ForgeUpdater implements ManifestForgeVersion {
 
     allFiles: string[] = [];
 
+    mods : Mod[] = [];
 
 
 
     constructor(public gameVersion : ForgeVersion, public dir : DirectoryManager) {}
 
+
+    public addMods(mods : Mod[])
+    {
+        this.mods = this.mods.concat(mods);
+    }
+
+    public addMod(mod : Mod)
+    {
+        this.mods.push(mod);
+    }
+
+    public async addModWithUrl(url : string)
+    {
+        let json = await fetch("https://node1.kiwigdc.fr/test.json", { method: "get" }).then
+        (
+            (response: Response) => {
+                return response.json();
+            }
+        );
+
+        this.mods = this.mods.concat(json);
+
+    }
 
     public async setManisfest(): Promise<any> {
         this.gameProperties = [];
@@ -56,7 +83,21 @@ export class ForgeUpdater implements ManifestForgeVersion {
 
         await this.downloadsForgeFiles();
         await this.downloadsLibrariesFiles();
+        await this.downloadMods();
         //await this.patchClient(); not working, use the forge .jar ?
+    }
+
+
+
+    public async downloadMods() 
+    {
+        Logger.getLogger().print("Download mods files : ")
+        
+        await Promise.all(this.mods.map(async mod => 
+            {
+                await this.checkDownloadFiles(mod.url, mod.sha1, path.join(this.dir.getGameDirectory(), "mods", path.basename(mod.url)))
+            }
+        ));
     }
 
 
@@ -76,6 +117,7 @@ export class ForgeUpdater implements ManifestForgeVersion {
         Logger.getLogger().print("Forge file :" + TextColor.GREEN + file + TextFormat.RESET + "| Url : " + TextColor.GREEN + url);
         spawn("java", ["-jar", file, "--extract", this.dir.getLibsDirectory()], {cwd: this.dir.gameDir});
         Logger.getLogger().print("Forge extraction");
+        this.allFiles.push(path.join(this.dir.getLibsDirectory(), "forge-" + this.gameVersion.getMcVer() + "-" + this.gameVersion.getForgeVer() + ".jar"));
         const zip = new StreamZip.async({ file: file});
         const entries = await zip.entries();
         for await(const entry of Object.values(entries)) 
@@ -131,31 +173,30 @@ export class ForgeUpdater implements ManifestForgeVersion {
     {
         this.allFiles.push(dist);
         var isChanged : boolean = false;
-        if(!await this.isForgeInstalled())
+        if(!fs.existsSync(dist))
         {
-
-            if(!fs.existsSync(dist))
-            {
-                fs.mkdirSync(path.dirname(dist), {recursive: true});
+            fs.mkdirSync(path.dirname(dist), {recursive: true});
+            fs.writeFileSync(dist, await download(url));
+            isChanged = true;
+            Logger.getLogger().print(TextColor.GREEN + dist);
+            this.totalDownloadedFiles++;
+            
+        }
+        else
+        {
+            if(hash != "" && hasha.fromFileSync(dist, {algorithm: 'sha1'}) != hash){
                 fs.writeFileSync(dist, await download(url));
                 isChanged = true;
-                Logger.getLogger().print("Extraction : " + TextColor.GREEN + dist);
+                Logger.getLogger().print(TextColor.GREEN + dist);
                 this.totalDownloadedFiles++;
-                
             }
-            else
-            {
-                if(hash != "" && hasha.fromFileSync(dist, {algorithm: 'sha1'}) != hash){
-                    fs.writeFileSync(dist, await download(url));
-                    isChanged = true;
-                    Logger.getLogger().print("Extraction : " + TextColor.GREEN + dist);
-                    this.totalDownloadedFiles++;
-                }
 
-            }
         }
+        
         return isChanged;
     }
+
+
 
 
     getAllFiles() {

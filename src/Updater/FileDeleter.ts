@@ -34,7 +34,8 @@ export class FileDeleter {
         const files = RecursiveFolderFile.getAllFiles(this.dir.getGameDirectory(), [], undefined, excludesFilesDefault);
         const fileDeleter = files.filter(x => !filesVerif.includes(x));
         fileDeleter.forEach(x => { 
-            fs.unlinkSync(x);
+            Logger.getLogger().print("Deleting... " + TextColor.GREEN + x)
+            fs.rmSync(x);
         });
         Logger.getLogger().print("File deleter : " + TextColor.RED + fileDeleter.length + TextFormat.RESET);
         

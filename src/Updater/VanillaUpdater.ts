@@ -54,7 +54,7 @@ export class VanillaUpdater implements ManifestVanillaVersion {
     public async updateGame()
     {
         if(!fs.existsSync(this.dir.getGameDirectory())){ fs.mkdirSync(this.dir.getGameDirectory(), {recursive: true})}
-        Logger.getLogger().print("Vanilla File : " + TextColor.GREEN + RecursiveFolderFile.getAllFiles(this.dir.getGameDirectory()).length);
+        Logger.getLogger().print("Total File : " + TextColor.GREEN + RecursiveFolderFile.getAllFiles(this.dir.getGameDirectory()).length);
         await this.setManisfest();
         await this.downloadsLibrariesFiles();
         await this.downloadAssetsFiles();

@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import { Logger } from "./Logger";
-import { TextFormat } from './FormatColor';
+import { TextColor, TextFormat } from './FormatColor';
 
 export class KLogger extends Logger 
 {
@@ -45,6 +45,12 @@ export class KLogger extends Logger
         this.bufferWrite.write(msg + "\n", 'utf-8');
     
 
+    }
+
+    debug(msg: string): void
+    {
+        msg = "DEBUG\n" + TextColor.RED +  msg + "\n";
+        console.debug(msg);
     }
 
     public static getLogger()

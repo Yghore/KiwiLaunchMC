@@ -11,7 +11,7 @@ export abstract class Logger
     
     static getLogger() : Logger
     {
-        if(Logger.logger == undefined){Logger.logger = {print(msg: string){console.log(msg)}}}
+        if(Logger.logger == undefined){Logger.logger = {print(msg: string){console.log(msg)}, debug(msg: string){console.debug(msg)}}}
         return Logger.logger;
     }
 
@@ -25,6 +25,8 @@ export abstract class Logger
      * @param msg Message 
      */
     abstract print(msg: string) : void;
+
+    abstract debug(msg: string) : void;
 
 
 }

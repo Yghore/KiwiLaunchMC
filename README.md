@@ -151,3 +151,34 @@ class KLogger extends Logger
     }
 ```
 
+
+## Dynamic json file for self-hosted mods : 
+
+This php script generates a json : 
+```php
+<?php
+
+$file = "mods/"; // Path to the mods folder
+$url = "http://localhost/"; // URL to the mods folder
+
+$json = array();
+if ($handle = opendir($file)) {
+    while (false !== ($entry = readdir($handle))) {
+        if ($entry != "." && $entry != ".." && !is_dir($entry)) {
+            $mod = array("url" => $url . $file . $entry, "sha1" => sha1_file($file . $entry));
+            array_push($json, $mod);
+        }
+    }
+    closedir($handle);
+}
+
+echo json_encode($json);
+
+?>
+
+```
+
+## Security of FileDeleter
+
+The fileDeleter is not a secure for cheater and other hack, because the client maybe a other launcher
+for forced mods list use (for exemple) : [WatchDog Anti Cheat mod](https://www.curseforge.com/minecraft/mc-mods/watchdog-anti-cheat)
