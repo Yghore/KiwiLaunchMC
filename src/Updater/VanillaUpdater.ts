@@ -9,6 +9,7 @@ import crc32 from "crc/crc32";
 import { LibsInformations } from "../Utils/LibsInformations";
 import { TextColor } from "../Logger/FormatColor";
 import { ManifestVanillaVersion } from "./Manifests/ManifestVanillaVersion";
+import { ProgressBar } from "./ProgressBar";
 
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
@@ -196,6 +197,7 @@ export class VanillaUpdater implements ManifestVanillaVersion {
             isChanged = true;
             Logger.getLogger().print(TextColor.GREEN + dist);
             this.totalDownloadedFiles++;
+            ProgressBar.getProgressBar().add();
             
         }
         else
@@ -205,6 +207,7 @@ export class VanillaUpdater implements ManifestVanillaVersion {
                 isChanged = true;
                 Logger.getLogger().print(TextColor.GREEN + dist);
                 this.totalDownloadedFiles++;
+                ProgressBar.getProgressBar().add();
             }
 
         }

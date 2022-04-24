@@ -28,10 +28,14 @@ const path = require("path");
 const FormatColor_1 = require("./Logger/FormatColor");
 const Logger_1 = require("./Logger/Logger");
 const Mod_1 = require("./Updater/Manifests/Mod");
+const ProgressBar_1 = require("./Updater/ProgressBar");
 (function () {
     return __awaiter(this, void 0, void 0, function* () {
         const kLogger = new KLogger_1.KLogger(path.join(__dirname, "launcher_logs.log"), "[LauncherTest]");
         Logger_1.Logger.setLogger(kLogger);
+        const progressBar = new ProgressBar_1.ProgressBar();
+        progressBar.setMax(1000);
+        ProgressBar_1.ProgressBar.setProgressBar(progressBar);
         var dir = new DirectoryManager_1.DirectoryManager(path.join(DirectoryManager_1.DirectoryManager.DEFAULT_DIRECTORY, ".LauncherTest"), "natives", "libraries", "minecraft.jar", "assets");
         var ver = new GameVersion_1.GameVersion(MinecraftVersion_1.MinecraftVersion.V1_8_HIGHER, GameTweak_1.GameTweak.FORGE, "1.12", "1.12.2");
         var vanillaUpdater = new VanillaUpdater_1.VanillaUpdater(ver, dir);
@@ -43,7 +47,8 @@ const Mod_1 = require("./Updater/Manifests/Mod");
         var globalLaunch = new Launch_1.Launch(java, parameters, dir, ver, auth);
         var processManager = new ProcessManager_1.ProcessManager(globalLaunch, ProcessProfile_1.ProcessProfile.INTERNAL);
         yield vanillaUpdater.updateGame();
-        yield forgeUpdater.addModWithUrl("https://xxxx.xxxxxx.fr/test.json");
+        progressBar.onUpdate(() => { Logger_1.Logger.getLogger().print(FormatColor_1.TextColor.RED + "Progression : " + progressBar.getProgress()) + "%"; });
+        //await forgeUpdater.addModWithUrl("https://xxxx.xxxxxx.fr/test.json");
         yield forgeUpdater.addMod(new Mod_1.Mod("https://micdoodle8.com/new-builds/GC-1.12/280/MicdoodleCore-1.12.2-4.0.2.280.jar", "906B6088C54A428D7A383796E7B77283CCA7E573"));
         yield forgeUpdater.updateGame();
         let badFiles = deleter.start();

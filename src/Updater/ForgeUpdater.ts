@@ -10,6 +10,7 @@ import { exec, spawn} from "child_process";
 import { TextColor, TextFormat } from "../Logger/FormatColor";
 import { ManifestForgeVersion } from "./Manifests/ManifestForgeVersion";
 import { Mod } from "./Manifests/Mod";
+import { ProgressBar } from "./ProgressBar";
 
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
@@ -180,6 +181,7 @@ export class ForgeUpdater implements ManifestForgeVersion {
             isChanged = true;
             Logger.getLogger().print(TextColor.GREEN + dist);
             this.totalDownloadedFiles++;
+            ProgressBar.getProgressBar().add();
             
         }
         else
@@ -189,6 +191,7 @@ export class ForgeUpdater implements ManifestForgeVersion {
                 isChanged = true;
                 Logger.getLogger().print(TextColor.GREEN + dist);
                 this.totalDownloadedFiles++;
+                ProgressBar.getProgressBar().add();
             }
 
         }

@@ -18,6 +18,7 @@ import { TextColor, TextFormat, BGColor} from "./Logger/FormatColor";
 import { Logger } from "./Logger/Logger";
 import { Mod } from "./Updater/Manifests/Mod";
 import { Dir } from "fs";
+import { ProgressBar } from "./Updater/ProgressBar";
 
 
 (async function(){
@@ -26,6 +27,13 @@ import { Dir } from "fs";
 
     const kLogger = new KLogger(path.join(__dirname, "launcher_logs.log"), "[LauncherTest]");
     Logger.setLogger(kLogger);
+
+    const progressBar = new ProgressBar();
+    progressBar.setMax(1000);
+    ProgressBar.setProgressBar(progressBar);
+    
+
+
 
     var dir = new DirectoryManager(path.join(DirectoryManager.DEFAULT_DIRECTORY, ".LauncherTest"), "natives", "libraries", "minecraft.jar", "assets");
     var ver = new GameVersion(MinecraftVersion.V1_8_HIGHER, GameTweak.FORGE, "1.12", "1.12.2");
@@ -39,10 +47,15 @@ import { Dir } from "fs";
     var processManager = new ProcessManager(globalLaunch, ProcessProfile.INTERNAL);
     
     
+
+    
+
     await vanillaUpdater.updateGame();
+    
 
+    progressBar.onUpdate(() => { Logger.getLogger().print(TextColor.RED + "Progression : " + progressBar.getProgress()) + "%";});
 
-    await forgeUpdater.addModWithUrl("https://xxxx.xxxxxx.fr/test.json");
+    //await forgeUpdater.addModWithUrl("https://xxxx.xxxxxx.fr/test.json");
     await forgeUpdater.addMod(new Mod("https://micdoodle8.com/new-builds/GC-1.12/280/MicdoodleCore-1.12.2-4.0.2.280.jar", "906B6088C54A428D7A383796E7B77283CCA7E573"));
 
 
@@ -65,6 +78,8 @@ import { Dir } from "fs";
     launch.stderr.on('error', function (error: { toString: () => string; }) {
         Logger.getLogger().print(TextColor.RED + error.toString())
     });
+
+    
 
 
 
